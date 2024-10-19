@@ -5,6 +5,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.block.data.BlockData;
+import org.bukkit.block.data.Waterlogged;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import javax.swing.border.Border;
@@ -60,6 +62,22 @@ public class SeaLevelManager {
                         for (int y = level; y <= level + 1; y++) { // Remplir la couche d'eau
                             World world = Bukkit.getServer().getWorld("world");
                             Block block = world.getBlockAt(x, y, z);
+
+
+
+                                // Vérifie si le bloc est déjà waterloggable
+                                if (block.getBlockData() instanceof Waterlogged) {
+                                    Waterlogged waterlogged = (Waterlogged) block.getBlockData();
+
+                                    // Vérifie si le bloc n'est pas déjà rempli d'eau
+                                    if (!waterlogged.isWaterlogged()) {
+                                        waterlogged.setWaterlogged(true);  // Active le waterlogging
+                                        block.setBlockData(waterlogged);   // Applique la modification au bloc
+                                        System.out.println("Le bloc a été transformé en waterloggable.");
+                                        finished = false; // S'il y a eu un changement, on n'est pas fini
+                                    }
+                                }
+
                             if (block.getType() == Material.AIR) {
                                 block.setType(Material.WATER); // Remplace les blocs d'air par de l'eau
                                 finished = false; // S'il y a eu un changement, on n'est pas fini
