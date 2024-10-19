@@ -17,6 +17,7 @@ public final class Submersion extends JavaPlugin {
         this.getCommand("SetBorderSize").setExecutor(new SetBorderCommand());
 
 
+
     }
 
     @Override
