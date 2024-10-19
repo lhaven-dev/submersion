@@ -1,0 +1,11 @@
+name: submersion
+version: '1.0-SNAPSHOT'
+main: fr.lhaven.submersion.Submersion
+api-version: '1.21'
+commands:
+  raiseSeaLevel:
+    description: "Démarre la montée du niveau de la mer."
+    usage: "/raiseSeaLevel"
+  SetBorderSize:
+     description: "Choix de la taille de la bordure."
+     usage: "/setbordersize"
