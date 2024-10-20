@@ -1,7 +1,9 @@
 package fr.lhaven.submersion;
-
+import fr.lhaven.submersion.commands.AddPlayersToTeamCommand;
+import fr.lhaven.submersion.commands.CreateTeamCommand;
 import fr.lhaven.submersion.commands.SetSeaLevelCommand;
 import fr.lhaven.submersion.commands.SetBorderCommand;
+import fr.lhaven.submersion.listener.PlayerJoinListener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class Submersion extends JavaPlugin {
@@ -15,7 +17,11 @@ public final class Submersion extends JavaPlugin {
 
         this.getCommand("raiseSeaLevel").setExecutor(new SetSeaLevelCommand());
         this.getCommand("SetBorderSize").setExecutor(new SetBorderCommand());
+        this.getCommand("CreateTeam").setExecutor(new CreateTeamCommand());
+        this.getCommand("AddPlayerToTeam").setExecutor(new AddPlayersToTeamCommand());
 
+
+        getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
 
 
     }

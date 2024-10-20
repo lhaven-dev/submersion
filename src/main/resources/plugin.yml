@@ -9,3 +9,9 @@ commands:
   SetBorderSize:
      description: "Choix de la taille de la bordure."
      usage: "/setbordersize"
+  AddPlayerToTeam:
+      description: "Choix de la taille de la bordure."
+      usage: "/setbordersize"
+  CreateTeam:
+      description: "Choix de la taille de la bordure."
+      usage: "/setbordersize"
