@@ -1,0 +1,14 @@
+TODO :
+Team / Player
+- Gestion de la taille des équipes (nombre de joueurs limité)
+- Gestion si le joueurs fait déja parti de l'équipe
+- Gestion de la deconnection d'un joueur
+- Gestion du mouvement des joueurs entre les équipes
+- Gestion des joueurs par équipes
+
+
+- Ajout module de gestion des loot  " Fait en sorte que les coffre présent sur la map , Ender chest , Chest , Trapped chest , au clic despawn , et give des truc au joueurs "
+- Ajout module gestion du larguage " rtp dans la zone de la border , en verifiant qu'il n'y a pas d'eau en dessous "
+
+
+- Potentiel ajout de "scenario" / mode de jeux , pour la gestion des partie

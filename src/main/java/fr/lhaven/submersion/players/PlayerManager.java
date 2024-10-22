@@ -22,6 +22,15 @@ public class PlayerManager {
         return instance;
     }
 
+    public Map<UUID, PlayerData> getPlayerList() {
+        if(playerDataMap == null){
+            System.out.println("La liste des joueurs est vide");
+        }
+        else {
+            return playerDataMap;
+        }
+        return null;
+    }
     public void addPlayer(Player player) {
         if (!playerDataMap.containsKey(player.getUniqueId())) {
             playerDataMap.put(player.getUniqueId(), new PlayerData(player));
