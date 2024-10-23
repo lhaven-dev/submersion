@@ -1,4 +1,4 @@
-package fr.lhaven.submersion.Gamemode;
+package fr.lhaven.submersion.gamemode;
 
 import fr.lhaven.submersion.players.PlayerData;
 import fr.lhaven.submersion.map.Terrain;

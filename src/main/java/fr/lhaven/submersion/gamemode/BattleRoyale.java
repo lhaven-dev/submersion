@@ -1,10 +1,8 @@
-package fr.lhaven.submersion.Gamemode;
+package fr.lhaven.submersion.gamemode;
 
 
 import fr.lhaven.submersion.players.PlayerData;
 import fr.lhaven.submersion.players.team.Team;
-
-import java.util.List;
 
 public class BattleRoyale extends GameMode {
 
