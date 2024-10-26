@@ -1,8 +1,8 @@
 package fr.lhaven.submersion.listener;
 
 import fr.lhaven.submersion.Submersion;
-import fr.lhaven.submersion.game.GameManager;
-import fr.lhaven.submersion.gui.ChoiceMap;
+import fr.lhaven.submersion.gui.MenuPrincipal;
+import fr.lhaven.submersion.gui.MenuType;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -12,6 +12,8 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 
 import static fr.lhaven.submersion.gui.ChoiceGamemode.handleChoiceGamemodeClick;
 import static fr.lhaven.submersion.gui.ChoiceMap.handleChoiceMapClick;
+import static fr.lhaven.submersion.gui.ChoicePlayer.handleChoicePlayerClick;
+import static fr.lhaven.submersion.gui.MenuPrincipal.handleMenuPrincipalClick;
 
 public class GuiListener implements Listener {
 
@@ -27,26 +29,37 @@ public class GuiListener implements Listener {
         if (!player.hasMetadata(OPENED_MENU_KEY)) {
             return; // Sort si aucune métadonnée n'est présente
         }
+// Récupération du type de menu à partir de la métadonnée
+        String menuTypeString = player.getMetadata(OPENED_MENU_KEY).get(0).asString();
+        MenuType menuType = MenuType.fromMetaKey(menuTypeString);
 
-        String menuType = player.getMetadata(OPENED_MENU_KEY).get(0).asString();
-        event.setCancelled(true); // Annule l'événement pour éviter des actions indésirables
 
-        switch (menuType) {
-            case "Submersion_ChoiceGamemode":
-                handleChoiceGamemodeClick(player, event.getSlot());
-                break;
+        if (menuType != null) {
+            switch (menuType) {
+                case CHOICE_GAMEMODE:
+                    handleChoiceGamemodeClick(player, event.getSlot());
+                    break;
 
-            case "Submersion_ChoiceMap":
-                handleChoiceMapClick(player, event.getSlot());
-                break;
+                case CHOICE_MAP:
+                    handleChoiceMapClick(player, event.getSlot());
+                    break;
 
-            default:
-                // Optionnel : gestion d'un menu non reconnu
-                player.sendMessage("Menu non reconnu.");
-                break;
+                case CHOICE_PLAYER:
+                    handleChoicePlayerClick(player, event.getSlot(), event.getClick());
+                    break;
+
+                case MENU_PRINCIPAL:
+                    handleMenuPrincipalClick(player, event.getSlot());
+                    break;
+
+                default:
+                    player.sendMessage("Menu non reconnu." + menuType);
+                    break;
+            }
+        } else {
+            player.sendMessage("Type de menu non valide.");
         }
-        }
-
+    }
 
     @EventHandler
     public void onClose(InventoryCloseEvent event) {

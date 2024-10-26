@@ -45,11 +45,6 @@ public class GameManager {
     public void createGame() {
         gameCreated = true;
         System.out.println("Game created");
-        // choisir la map ( event )
-        // choisir le nombre de joueurs ( event )
-        // choisir le mode de jeu ( event )
-        // choisir les options (  event )
-
     }
 
     public void setGameMode(String mode) {

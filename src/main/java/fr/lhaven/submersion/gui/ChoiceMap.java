@@ -10,11 +10,14 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 
+import fr.lhaven.submersion.gui.MenuType;
+
+import static fr.lhaven.submersion.gui.MenuType.CHOICE_MAP;
+import static fr.lhaven.submersion.gui.MenuType.CHOICE_PLAYER;
+
 public  class ChoiceMap {
 
     public static void ChoiceMap(Player player) {
-        System.out.println("DEBUG: testchoixmap");
-
 
         Inventory inventory = Bukkit.createInventory(player, 9*3, "Choix de la map");
 
@@ -39,9 +42,8 @@ public  class ChoiceMap {
         inventory.setItem(11, Island);
         inventory.setItem(15, Volcano);
         inventory.setItem(26, Retour);
-        System.out.println("DEBUG: TestChoixMapfinal");
         player.closeInventory();
-        player.setMetadata("OpenedMenu", new FixedMetadataValue(Submersion.getPlugin(Submersion.class), "Submersion_ChoiceMap"));
+        player.setMetadata("OpenedMenu", new FixedMetadataValue(Submersion.getPlugin(Submersion.class),CHOICE_MAP.getMetaKey()));
         player.openInventory(inventory);
     }
 
@@ -50,21 +52,21 @@ public  class ChoiceMap {
             case 11:
                 GameManager.getInstance().setMap("Island");
                 player.sendMessage("Game map set to Island");
+                ChoicePlayer.ChoicePlayer(player);
                 break;
 
             case 15:
                 GameManager.getInstance().setMap("Volcano");
                 player.sendMessage("Game map set to Volcano");
+                ChoicePlayer.ChoicePlayer(player);
                 break;
 
             case 26:
-                player.closeInventory();
-                player.sendMessage("Test choice map");
+                ReturnButton.handleReturnButtonClick(player);
                 break;
 
             default:
                 // Optionnel : gestion d'un slot non reconnu
-                player.sendMessage("Slot non reconnu dans le choix de carte.");
                 break;
         }
     }

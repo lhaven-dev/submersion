@@ -10,6 +10,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 
+import static fr.lhaven.submersion.gui.MenuType.CHOICE_GAMEMODE;
+import static fr.lhaven.submersion.gui.MenuType.CHOICE_PLAYER;
+
 public class ChoiceGamemode {
 
 public static void ChoiceGamemode(Player player) {
@@ -41,7 +44,7 @@ public static void ChoiceGamemode(Player player) {
     inventory.setItem(15, teamvsteam);
     inventory.setItem(26, Retour);
     player.closeInventory();
-    player.setMetadata("OpenedMenu", new FixedMetadataValue(Submersion.getPlugin(Submersion.class), "Submersion_ChoiceGamemode"));
+    player.setMetadata("OpenedMenu", new FixedMetadataValue(Submersion.getPlugin(Submersion.class), CHOICE_GAMEMODE.getMetaKey()));
     player.openInventory(inventory);
 }
 
@@ -50,9 +53,6 @@ public static void handleChoiceGamemodeClick(Player player, int slot) {
         case 11:
             GameManager.getInstance().createGame();
             GameManager.getInstance().setGameMode("Battle Royale");
-            player.sendMessage("Game created");
-            player.sendMessage("Game mode set to Battle Royale");
-            player.sendMessage(GameManager.getInstance().toString());
             ChoiceMap.ChoiceMap(player);
             break;
 
@@ -61,12 +61,11 @@ public static void handleChoiceGamemodeClick(Player player, int slot) {
             break;
 
         case 26:
-            ChoiceMap.ChoiceMap(player);
+            ReturnButton.handleReturnButtonClick(player);
             break;
 
         default:
             // Optionnel : gestion d'un slot non reconnu
-            player.sendMessage("Slot non reconnu dans le choix de mode de jeu.");
             break;
     }
 }
