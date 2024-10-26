@@ -7,6 +7,9 @@ public class PlayerData {
     private final Player player;
     private Team team;
     private boolean alive;
+    private boolean isSpectator;
+
+    private boolean isdisconnected;
 
     public PlayerData(Player player) {
         this.player = player;
@@ -31,6 +34,14 @@ public class PlayerData {
 
     public Team getTeam() {
         return team;
+    }
+
+    public boolean isSpectator() {
+        return isSpectator;
+    }
+
+    public boolean isIsdisconnected() {
+        return isdisconnected;
     }
 }
 

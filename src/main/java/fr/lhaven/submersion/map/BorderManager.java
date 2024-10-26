@@ -1,4 +1,4 @@
-package fr.lhaven.submersion.border;
+package fr.lhaven.submersion.map;
 
 import org.bukkit.Bukkit;
 

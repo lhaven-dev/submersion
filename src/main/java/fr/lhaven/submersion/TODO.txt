@@ -12,3 +12,16 @@ Team / Player
 
 
 - Potentiel ajout de "scenario" / mode de jeux , pour la gestion des partie
+
+- Scenario :
+
+- A la connection d'un joueurs il est tp dans un lobby , il doit attendre
+
+- une personne register en tant que "host" , crée une partie en choissisant le mode de jeux , ( il peux la crée , la supprimer etc...)
+- une fois la partie crée , il la configure ( nombre de joueurs , taille des équipes , map ,  etc...)
+- Une gestion est réalisé en fonction des cas , et il peux spécifier qui est en spectateur ou non , qui est en jeu ou non
+- une fois tout le monde reparti , si tout le monde n'as pas rejoint d'equipe pr le mode Team , un randomize est effectué
+- une fois tout le monde en jeu , le host peux lancer la partie
+- une fois la partie lancé , un timer est lancé, et le "gamemode" se déroule ( évenements récurent etc.. , la partie est terminé quand
+- il ne reste qu'un joueurs en vie , ou qu'une équipe en vie ( en fonction du mode de jeux )
+- une fois la partie terminé , un recap est effectué , et les joueurs sont tp dans le lobby

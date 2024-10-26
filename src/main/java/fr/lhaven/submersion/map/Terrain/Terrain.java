@@ -1,4 +1,4 @@
-package fr.lhaven.submersion.map;
+package fr.lhaven.submersion.map.Terrain;
 
 public abstract class Terrain {
 

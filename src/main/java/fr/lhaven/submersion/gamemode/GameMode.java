@@ -1,7 +1,7 @@
 package fr.lhaven.submersion.gamemode;
 
 import fr.lhaven.submersion.players.PlayerData;
-import fr.lhaven.submersion.map.Terrain;
+import fr.lhaven.submersion.map.Terrain.Terrain;
 import fr.lhaven.submersion.players.team.Team;
 
 import java.util.List;
@@ -16,7 +16,7 @@ public abstract class GameMode {
     protected boolean isRunning;
     protected boolean hasTeams;
 
-    protected Terrain Terrain;
+    protected Terrain terrain;
 
     protected int timeElapsed;
 
@@ -50,7 +50,7 @@ public abstract class GameMode {
 
     public abstract void ConfigurationGame();
 
-    public abstract void ChooseMap();
+    public abstract void ChooseMap(String mapName);
 
     public abstract void addplayerToGame(PlayerData player);
     public abstract void addplayerToTeam(PlayerData player, Team team);
