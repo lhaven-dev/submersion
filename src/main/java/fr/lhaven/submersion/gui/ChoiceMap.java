@@ -10,10 +10,10 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 
-import fr.lhaven.submersion.gui.MenuType;
+
 
 import static fr.lhaven.submersion.gui.MenuType.CHOICE_MAP;
-import static fr.lhaven.submersion.gui.MenuType.CHOICE_PLAYER;
+
 
 public  class ChoiceMap {
 

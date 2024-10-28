@@ -2,7 +2,7 @@ package fr.lhaven.submersion.gui;
 
 
 import fr.lhaven.submersion.Submersion;
-import fr.lhaven.submersion.game.GameManager;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

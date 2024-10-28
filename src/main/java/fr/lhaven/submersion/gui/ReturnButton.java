@@ -1,12 +1,6 @@
 package fr.lhaven.submersion.gui;
-
-import fr.lhaven.submersion.Submersion;
 import org.bukkit.entity.Player;
-import org.bukkit.metadata.FixedMetadataValue;
 
-import java.awt.*;
-
-import static fr.lhaven.submersion.gui.MenuType.MENU_PRINCIPAL;
 
 public class ReturnButton {
     public static void ReturnButton() {

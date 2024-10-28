@@ -1,7 +1,6 @@
 package fr.lhaven.submersion.listener;
 
 import fr.lhaven.submersion.Submersion;
-import fr.lhaven.submersion.gui.MenuPrincipal;
 import fr.lhaven.submersion.gui.MenuType;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;

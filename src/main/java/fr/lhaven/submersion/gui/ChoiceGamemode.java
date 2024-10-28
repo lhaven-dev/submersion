@@ -11,7 +11,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 
 import static fr.lhaven.submersion.gui.MenuType.CHOICE_GAMEMODE;
-import static fr.lhaven.submersion.gui.MenuType.CHOICE_PLAYER;
+
 
 public class ChoiceGamemode {
 
