@@ -17,7 +17,6 @@ public class SeaLevelManager {
     // Attribut pour la taille de la bordure
     private int borderSize;
 
-    // Constructeur privé pour empêcher l'instanciation extérieure
     private SeaLevelManager() {
         this.sealevel = 0; // ou une autre valeur par défaut
         borderManager = BorderManager.getInstance();
@@ -52,7 +51,6 @@ public class SeaLevelManager {
 
                 boolean finished = true; // Flag pour suivre si tout est terminé
 
-                // Parcours les blocs dans les limites de la bordure à partir de la couche 64
                 for (int x = minX; x <= maxX; x++) {
                     for (int z = minZ; z <= maxZ; z++) {
                         for (int y = level; y <= level + 1; y++) { // Remplir la couche d'eau
@@ -61,11 +59,9 @@ public class SeaLevelManager {
 
 
 
-                                // Vérifie si le bloc est déjà waterloggable
                                 if (block.getBlockData() instanceof Waterlogged) {
                                     Waterlogged waterlogged = (Waterlogged) block.getBlockData();
 
-                                    // Vérifie si le bloc n'est pas déjà rempli d'eau
                                     if (!waterlogged.isWaterlogged()) {
                                         waterlogged.setWaterlogged(true);  // Active le waterlogging
                                         block.setBlockData(waterlogged);   // Applique la modification au bloc

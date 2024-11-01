@@ -14,7 +14,7 @@ public class ReturnButton {
 
             switch (menuType)
             {
-                case CHOICE_GAMEMODE, CHOICE_MAP, CHOICE_PLAYER:
+                case CHOICE_SCENARIO, CHOICE_MAP, CHOICE_PLAYER:
                     MenuPrincipal.MenuPrincipal(player);
                     break;
                 case MENU_PRINCIPAL:

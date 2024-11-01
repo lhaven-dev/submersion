@@ -2,7 +2,7 @@ package fr.lhaven.submersion.gui;
 
 
 public enum MenuType {
-    CHOICE_GAMEMODE("Submersion_ChoiceGamemode"),
+    CHOICE_SCENARIO("Submersion_ChoiceScenario"),
     CHOICE_MAP("Submersion_ChoiceMap"),
     CHOICE_PLAYER("Submersion_ChoicePlayer"),
     MENU_PRINCIPAL("Submersion_MenuPrincipal");

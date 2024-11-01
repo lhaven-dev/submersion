@@ -13,8 +13,7 @@ public class PlayerJoinListener implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        getLogger().info("Event triggered PlayerJoinEvent");
         getLogger().info("Joueur " + player.getName());
-        PlayerManager.getInstance().addPlayer(player);
+        PlayerManager.getInstance().addPlayer(player.getUniqueId());
     }
 }

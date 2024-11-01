@@ -1,10 +1,12 @@
 package fr.lhaven.submersion.map.Terrain;
 
+import fr.lhaven.submersion.map.BorderManager;
+
 public class Island extends Terrain {
 
     public Island() {
         this.mapName = "Island";
-        this.borderSize = 1000;
+        this.borderSize = 300;
 
     }
 
@@ -16,6 +18,7 @@ public class Island extends Terrain {
 
     @Override
     public void generateBorder() {
+        BorderManager.getInstance().setBorderSize(this.borderSize);
         // la ou on apelle la border pour la set a la bonne taille
     }
 

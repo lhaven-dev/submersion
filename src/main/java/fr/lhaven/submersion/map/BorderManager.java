@@ -6,16 +6,12 @@ public class BorderManager {
     // Instance statique unique de la classe
     private static BorderManager instance;
 
-    // Attribut pour la taille de la bordure
     private int borderSize;
 
-    // Constructeur privé pour empêcher l'instanciation extérieure
     private BorderManager() {
-        // Initialisation, si nécessaire
         this.borderSize = 0; // ou une autre valeur par défaut
     }
 
-    // Méthode statique pour obtenir l'instance unique
     public static BorderManager getInstance() {
         if (instance == null) {
             instance = new BorderManager();

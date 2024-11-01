@@ -9,7 +9,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 
-import static fr.lhaven.submersion.gui.ChoiceGamemode.handleChoiceGamemodeClick;
+import static fr.lhaven.submersion.gui.ChoiceScenario.handleChoiceScenarioClick;
 import static fr.lhaven.submersion.gui.ChoiceMap.handleChoiceMapClick;
 import static fr.lhaven.submersion.gui.ChoicePlayer.handleChoicePlayerClick;
 import static fr.lhaven.submersion.gui.MenuPrincipal.handleMenuPrincipalClick;
@@ -35,8 +35,8 @@ public class GuiListener implements Listener {
 
         if (menuType != null) {
             switch (menuType) {
-                case CHOICE_GAMEMODE:
-                    handleChoiceGamemodeClick(player, event.getSlot());
+                case CHOICE_SCENARIO:
+                    handleChoiceScenarioClick(player, event.getSlot());
                     break;
 
                 case CHOICE_MAP:

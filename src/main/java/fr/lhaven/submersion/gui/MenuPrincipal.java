@@ -3,6 +3,7 @@ package fr.lhaven.submersion.gui;
 
 import fr.lhaven.submersion.Submersion;
 
+import fr.lhaven.submersion.game.GameManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -22,7 +23,7 @@ public  class MenuPrincipal {
 
         ItemStack Gamemode = new ItemStack(Material.GRASS_BLOCK);
         ItemMeta GamemodeMeta = Gamemode.getItemMeta();
-        GamemodeMeta.setDisplayName("mode de jeu");
+        GamemodeMeta.setDisplayName("Scenario");
         Gamemode.setItemMeta(GamemodeMeta);
 
 
@@ -30,6 +31,11 @@ public  class MenuPrincipal {
         ItemMeta MapMeta = Map.getItemMeta();
         MapMeta.setDisplayName("map");
         Map.setItemMeta(MapMeta);
+
+        ItemStack Start = new ItemStack(Material.YELLOW_BANNER);
+        ItemMeta Startmeta = Map.getItemMeta();
+        Startmeta.setDisplayName("Start");
+        Start.setItemMeta(Startmeta);
 
 
 
@@ -39,7 +45,8 @@ public  class MenuPrincipal {
         Retour.setItemMeta(RetourMeta);
 
         inventory.setItem(11, Gamemode);
-        inventory.setItem(15, Map);
+        inventory.setItem(13, Map);
+        inventory.setItem(15, Start);
         inventory.setItem(26, Retour);
         player.closeInventory();
         player.setMetadata("OpenedMenu", new FixedMetadataValue(Submersion.getPlugin(Submersion.class),MENU_PRINCIPAL.getMetaKey()));
@@ -49,13 +56,14 @@ public  class MenuPrincipal {
     public static void handleMenuPrincipalClick(Player player, int slot) {
         switch (slot) {
             case 11:
-                ChoiceGamemode.ChoiceGamemode(player);
+                ChoiceScenario.ChoiceScenario(player);
                 break;
-
             case 15:
+                GameManager.getInstance().startGame();
+                break;
+            case 13:
                 ChoiceMap.ChoiceMap(player);
                 break;
-
             case 26:
                 ReturnButton.handleReturnButtonClick(player);
                 break;

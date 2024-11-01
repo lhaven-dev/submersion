@@ -1,6 +1,7 @@
 package fr.lhaven.submersion.commands;
 
-import fr.lhaven.submersion.gui.ChoiceGamemode;
+import fr.lhaven.submersion.game.GameManager;
+import fr.lhaven.submersion.gui.MenuPrincipal;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -14,10 +15,8 @@ public class CreateGameCommand implements CommandExecutor {
             sender.sendMessage("Vous devez être un joueur pour executer cette commande");
             return true;
         }
-        ChoiceGamemode.ChoiceGamemode(player);
+        MenuPrincipal.MenuPrincipal(player);
+        GameManager.getInstance().createGame();
         return true;
-
     }
-
-
 }

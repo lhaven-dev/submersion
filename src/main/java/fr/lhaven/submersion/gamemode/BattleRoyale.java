@@ -5,8 +5,11 @@ import fr.lhaven.submersion.game.GameManager;
 import fr.lhaven.submersion.map.Terrain.Island;
 import fr.lhaven.submersion.map.Terrain.Terrain;
 import fr.lhaven.submersion.map.Terrain.Volcano;
-import fr.lhaven.submersion.players.PlayerData;
-import fr.lhaven.submersion.players.team.Team;
+import fr.lhaven.submersion.players.PlayerManager;
+import fr.lhaven.submersion.utils.CustomBroadcast;
+import fr.lhaven.submersion.utils.LarguageManager;
+
+import java.util.UUID;
 
 public class BattleRoyale extends GameMode {
 
@@ -14,18 +17,11 @@ public class BattleRoyale extends GameMode {
 
     public BattleRoyale() {
         gameManager = GameManager.getInstance();
+        this.isStarted = false;
+        this.isFinished = false;
+        this.isRunning = false;
+        this.timeElapsed = 0;
     }
-
-    @Override
-    public void randomizeTeams() {
-
-    }
-
-    @Override
-    public void ConfigurationGame() {
-
-    }
-
     @Override
     public void ChooseMap(String mapName) {
 
@@ -34,63 +30,38 @@ public class BattleRoyale extends GameMode {
             System.out.println("Parti crée , choix la map possible ");
             if (mapName == "Volcano") {
                 Terrain terrain = new Volcano();
-                // Logique pour choisir la map
             }
             else if (mapName == "Island") {
                 Terrain terrain = new Island();
-                // Logique pour choisir la map
             }
             else {
                 System.out.println("La partie n'a pas été créée");
             }
-
-            // Logique pour choisir la map
         }
         else {
             System.out.println("La partie n'a pas été créée");
         }
-
     }
 
     @Override
-    public void addplayerToGame(PlayerData player) {
-
+    public void addplayerToGame(UUID uuid) {
+            PlayerManager.getInstance().addPlayer(uuid);
+            System.out.println("Le joueur a été ajouté au jeu.");
     }
 
     @Override
-    public void addplayerToTeam(PlayerData player, Team team) {
-
+    public void addspectatorToGame(UUID uuid) {
+        PlayerManager.getInstance().addSpectator(uuid);
+        System.out.println("Le joueur a été ajouté en tant que spectateur.");
     }
-
-    @Override
-    public void removePlayerFromGame(PlayerData player) {
-
-    }
-
-    @Override
-    public void removePlayerFromTeam(PlayerData player, Team team) {
-
-    }
-
-    @Override
-    public void addspectatorToGame(PlayerData player) {
-
-    }
-
-    @Override
-    public void removeSpectatorFromGame(PlayerData player) {
-
-    }
-
     @Override
     public void startGame() {
         System.out.println("Démarrage du mode Battle Royale !");
-        // Logique pour démarrer la partie Battle Royale (chaque joueur pour soi)
+        PlayerManager.getInstance().randomTeleportPlayers();
     }
 
     @Override
     public void configureParameters() {
-        System.out.println("Pas d'équipes en Battle Royale.");
         // Aucune équipe à configurer, pas de paramètres spécifiques
     }
 }

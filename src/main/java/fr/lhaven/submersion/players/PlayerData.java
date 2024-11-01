@@ -1,18 +1,19 @@
 package fr.lhaven.submersion.players;
 
-import fr.lhaven.submersion.players.team.Team;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import java.util.UUID;
+
 public class PlayerData {
-    private final Player player;
-    private Team team;
-    private boolean alive;
-    private boolean isSpectator;
+    private boolean alive = true;
+    private Player player;
+    private boolean isSpectator = false;
 
-    private boolean isdisconnected;
+    private boolean isdisconnected = false;
 
-    public PlayerData(Player player) {
-        this.player = player;
+    public PlayerData(UUID uuid) {
+        this.player = Bukkit.getPlayer(uuid);
         this.alive = true; // Le joueur commence en vie
     }
 
@@ -28,20 +29,20 @@ public class PlayerData {
         this.alive = alive;
     }
 
-    public void setTeam(Team team) {
-        this.team = team;
-    }
-
-    public Team getTeam() {
-        return team;
-    }
-
     public boolean isSpectator() {
-        return isSpectator;
+        return this.isSpectator;
     }
 
-    public boolean isIsdisconnected() {
-        return isdisconnected;
+    public void setSpectator(boolean spectator) {
+        this.isSpectator = spectator;
+    }
+
+    public void setDisconnected(boolean disconnected) {
+        this.isdisconnected = disconnected;
+    }
+
+    public boolean isdisconnected() {
+        return this.isdisconnected;
     }
 }
 

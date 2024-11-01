@@ -1,18 +1,16 @@
 package fr.lhaven.submersion.players;
+import fr.lhaven.submersion.utils.LarguageManager;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class PlayerManager {
     private static PlayerManager instance;
     private Map<UUID, PlayerData> playerDataMap = new HashMap<>();
 
     private PlayerManager() {
-
         playerDataMap = new HashMap<>(); // On initialise la map des Joueurs
-
     }
 
     public static PlayerManager getInstance() {
@@ -31,25 +29,25 @@ public class PlayerManager {
         }
         return null;
     }
-    public void addPlayer(Player player) {
-        if (!playerDataMap.containsKey(player.getUniqueId())) {
-            playerDataMap.put(player.getUniqueId(), new PlayerData(player));
+
+    public void addPlayer(UUID uuid) {
+        if (!playerDataMap.containsKey(uuid)) {
+            playerDataMap.put(uuid, new PlayerData(uuid));
         } else {
-            System.out.println("L'utilisateur existe déjà : " + player.getUniqueId());
-        }    }
+            System.out.println("L'utilisateur existe déjà : " + playerDataMap.get(uuid).getPlayer().getName());
+        }
+    }
 
     public PlayerData getPlayerData(UUID uuid) {
         PlayerData playerData = playerDataMap.get(uuid);
         if (playerData == null) {
             System.out.println("L'utilisateur avec l'UUID " + uuid + " n'existe pas.");
-            return null; // ou lancer une exception selon tes besoins
+            return null;
         }
-
         return playerData;
     }
 
     public void removePlayer(UUID uuid) {
-            // Vérifie si l'utilisateur existe avant de tenter de le supprimer
             if (playerDataMap.containsKey(uuid)) {
                 playerDataMap.remove(uuid);
                 System.out.println("L'utilisateur avec l'UUID " + uuid + " a été supprimé.");
@@ -58,18 +56,31 @@ public class PlayerManager {
             }
         }
 
+    public void removeSpectator(UUID uuid) {
+        playerDataMap.get(uuid).setSpectator(false);
+    }
 
-    public boolean isPlayerInGame(UUID uuid) {
-        boolean inGame = playerDataMap.containsKey(uuid);
+    public void SetAlive(UUID uuid) {
+        playerDataMap.get(uuid).setAlive(false);
+    }
+    public void SetDead(UUID uuid) {
+        playerDataMap.get(uuid).setAlive(false);
+    }
 
-        // Affiche un message en fonction de la présence de l'utilisateur
-        if (inGame) {
-            System.out.println("L'utilisateur avec l'UUID " + uuid + " est dans le jeu.");
-        } else {
-            System.out.println("L'utilisateur avec l'UUID " + uuid + " n'est pas dans le jeu.");
-        }
+    public void SetDisconnected(UUID uuid) {
+        playerDataMap.get(uuid).setDisconnected(true);
+    }
+    public void SetConnected(UUID uuid) {
+        playerDataMap.get(uuid).setDisconnected(false);
+    }
 
-        return inGame;    }
+    public void addSpectator(UUID uuid) {
+        playerDataMap.get(uuid).setSpectator(true);
+    }
+
+    public void randomTeleportPlayers() {
+                LarguageManager.getInstance().Start();
+    }
 }
 
 

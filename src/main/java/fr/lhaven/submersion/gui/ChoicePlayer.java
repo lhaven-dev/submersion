@@ -1,6 +1,7 @@
 package fr.lhaven.submersion.gui;
 
 import fr.lhaven.submersion.Submersion;
+import fr.lhaven.submersion.game.GameManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -106,13 +107,13 @@ public class ChoicePlayer {
                         player.sendMessage(targetPlayer.getName() + " est maintenant en mode spectateur.");
                         hiddenPlayers.add(targetPlayer);
                         // Logique pour passer le joueur en spectateur
-                        // Ex. : GameManager.getInstance().setSpectator(targetPlayer);
+                        GameManager.getInstance().setSpectator(targetPlayer);
                     } else if (clickType.isRightClick()) {
                         // Clic droit : Ajouter le joueur à la partie
                         player.sendMessage(targetPlayer.getName() + " a été ajouté à la partie.");
                         hiddenPlayers.add(targetPlayer);
                         // Logique pour ajouter le joueur à la partie
-                        // Ex. : GameManager.getInstance().addToGame(targetPlayer);
+                        GameManager.getInstance().AddToGame(targetPlayer);
                     }
 
                     openInventory.remove(item); // Retire la tête après action

@@ -25,3 +25,14 @@ Team / Player
 - une fois la partie lancé , un timer est lancé, et le "gamemode" se déroule ( évenements récurent etc.. , la partie est terminé quand
 - il ne reste qu'un joueurs en vie , ou qu'une équipe en vie ( en fonction du mode de jeux )
 - une fois la partie terminé , un recap est effectué , et les joueurs sont tp dans le lobby
+
+
+- Un menu Pour le choix du nombre de teams , et du nombre de joueurs par team
+
+///////////////////////////////////////
+Nombre de teams
+//////////////////////////////////////
+Nombre de joueurs par team  ( 1 a 18)
+//////////////////////////////////////
+
+
