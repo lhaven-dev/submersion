@@ -40,8 +40,8 @@ public static void ChoiceScenario(Player player) {
     Retour.setItemMeta(RetourMeta);
 
     inventory.setItem(11, PluieAcide);
-    inventory.setItem(13, ScenarioTwo);
-    inventory.setItem(15, ScenarioTrois);
+    //inventory.setItem(13, ScenarioTwo);
+    // inventory.setItem(15, ScenarioTrois);
     inventory.setItem(26, Retour);
     player.closeInventory();
     player.setMetadata("OpenedMenu", new FixedMetadataValue(Submersion.getPlugin(Submersion.class), CHOICE_SCENARIO.getMetaKey()));
@@ -56,10 +56,12 @@ public static void handleChoiceScenarioClick(Player player, int slot) {
                 if(GameManager.getInstance().isPluieAcide() == false)
                 {
                     GameManager.getInstance().setScenarioPluieAcide(true);
+                    System.out.println("Pluie Acide activée");
                 }
                 else
                 {
                     GameManager.getInstance().setScenarioPluieAcide(false);
+                    System.out.println("Pluie Acide désactivée");
                 }
             }
             break;

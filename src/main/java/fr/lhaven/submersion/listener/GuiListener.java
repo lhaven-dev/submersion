@@ -34,6 +34,7 @@ public class GuiListener implements Listener {
 
 
         if (menuType != null) {
+            event.setCancelled(true);
             switch (menuType) {
                 case CHOICE_SCENARIO:
                     handleChoiceScenarioClick(player, event.getSlot());
