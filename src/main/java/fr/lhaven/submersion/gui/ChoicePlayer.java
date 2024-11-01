@@ -2,21 +2,25 @@ package fr.lhaven.submersion.gui;
 
 import fr.lhaven.submersion.Submersion;
 import fr.lhaven.submersion.game.GameManager;
+import fr.lhaven.submersion.players.PlayerManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.metadata.FixedMetadataValue;
+
+import java.util.Collections;
 
 import static fr.lhaven.submersion.gui.MenuType.CHOICE_PLAYER;
 
 public class ChoicePlayer {
 
     public static void ChoicePlayer(Player player) {
-        Inventory inventory = Bukkit.createInventory(player, 9 * 9, "Choix des joueurs");
+        Inventory inventory = Bukkit.createInventory(player, 9 * 6, "Choix des joueurs");
 
         for (Player p : Bukkit.getOnlinePlayers()) {
             ItemStack playerItem = new ItemStack(Material.PLAYER_HEAD);
@@ -24,7 +28,10 @@ public class ChoicePlayer {
             if (playerItemMeta != null) {
                 playerItemMeta.setOwningPlayer(p);
                 playerItemMeta.setDisplayName(p.getName());
+                playerItemMeta.setLore(Collections.singletonList("Spectateur : false"));
+
                 playerItem.setItemMeta(playerItemMeta);
+
                 inventory.addItem(playerItem);
             }
         }
@@ -45,31 +52,45 @@ public class ChoicePlayer {
     public static void handleChoicePlayerClick(Player player, int slot, ClickType clickType) {
         Inventory openInventory = player.getOpenInventory().getTopInventory();
 
-        if (!"Choix des joueurs".equals(player.getOpenInventory().getTitle())) return;
-
         ItemStack item = openInventory.getItem(slot);
+
+        // Gestion du bouton retour
+        if (item.getType() == Material.RED_WOOL) {
+            ReturnButton.handleReturnButtonClick(player);
+        }
+
         if (item == null) return;
+        SkullMeta skullMeta = (SkullMeta) item.getItemMeta();
+        if (skullMeta == null || skullMeta.getOwningPlayer() == null) return;
 
-        if (item.getType() == Material.PLAYER_HEAD) {
-            SkullMeta skullMeta = (SkullMeta) item.getItemMeta();
-            if (skullMeta != null && skullMeta.getOwningPlayer() != null) {
-                Player targetPlayer = skullMeta.getOwningPlayer().getPlayer();
+        Player targetPlayer = skullMeta.getOwningPlayer().getPlayer();
 
-                if (targetPlayer != null) {
-                    if (clickType.isLeftClick()) {
-                        player.sendMessage(targetPlayer.getName() + " est maintenant en mode spectateur.");
+        if (targetPlayer != null) {
+            // Récupérer la description pour déterminer l'état du joueur
+            String lore = skullMeta.getLore() != null && !skullMeta.getLore().isEmpty() ? skullMeta.getLore().get(0) : "";
 
-                        // Passe le joueur en spectateur et remplace visuellement sa tête par un bloc de barrière
-                        GameManager.getInstance().setSpectator(targetPlayer);
-                        ItemStack barrierItem = new ItemStack(Material.BARRIER);
-                        barrierItem.getItemMeta().setDisplayName(targetPlayer.getName());
-                        openInventory.setItem(slot, barrierItem); // Remplace la tête par un bloc de barrière
+            // Si le joueur est en mode spectateur
+            if (lore.equals("Spectateur : true")) {
+                if (clickType.isLeftClick()) {
+                    // Redevenir joueur normal
+                    player.sendMessage(targetPlayer.getName() + " n'est plus en mode spectateur.");
+                    GameManager.getInstance().removeSpecator(targetPlayer);
 
-                    } else if (clickType.isRightClick()) {
-                        player.sendMessage(targetPlayer.getName() + " a été ajouté à la partie.");
-                        GameManager.getInstance().AddToGame(targetPlayer);
-                        openInventory.remove(item); // Retire la tête après action
-                    }
+                    // Mettre à jour la tête avec le nouvel état
+                    skullMeta.setLore(Collections.singletonList("Spectateur : false"));
+                    item.setItemMeta(skullMeta);
+                }
+            }
+            // Si le joueur est en mode normal
+            else {
+                if (clickType.isRightClick()) {
+                    // Devenir spectateur
+                    player.sendMessage(targetPlayer.getName() + " est maintenant en mode spectateur.");
+                    GameManager.getInstance().setSpectator(targetPlayer);
+
+                    // Mettre à jour la tête avec le nouvel état
+                    skullMeta.setLore(Collections.singletonList("Spectateur : true"));
+                    item.setItemMeta(skullMeta);
                 }
             }
         }

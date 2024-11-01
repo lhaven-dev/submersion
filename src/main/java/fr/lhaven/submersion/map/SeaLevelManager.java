@@ -18,7 +18,7 @@ public class SeaLevelManager {
     private int borderSize;
 
     private SeaLevelManager() {
-        this.sealevel = 0; // ou une autre valeur par défaut
+        this.sealevel = 64; // ou une autre valeur par défaut
         borderManager = BorderManager.getInstance();
 
     }
@@ -29,6 +29,10 @@ public class SeaLevelManager {
             instance = new SeaLevelManager();
         }
         return instance;
+    }
+
+    public int getSealevel() {
+        return sealevel;
     }
 
 
@@ -53,7 +57,7 @@ public class SeaLevelManager {
 
                 for (int x = minX; x <= maxX; x++) {
                     for (int z = minZ; z <= maxZ; z++) {
-                        for (int y = level; y <= level + 1; y++) { // Remplir la couche d'eau
+                        for (int y = sealevel; y <= sealevel + 1; y++) { // Remplir la couche d'eau
                             World world = Bukkit.getServer().getWorld("world");
                             Block block = world.getBlockAt(x, y, z);
 
@@ -69,7 +73,6 @@ public class SeaLevelManager {
                                         finished = false; // S'il y a eu un changement, on n'est pas fini
                                     }
                                 }
-
                             if (block.getType() == Material.AIR) {
                                 block.setType(Material.WATER); // Remplace les blocs d'air par de l'eau
                                 finished = false; // S'il y a eu un changement, on n'est pas fini
@@ -79,7 +82,10 @@ public class SeaLevelManager {
                 }
 
                 if (finished) {
-                    Bukkit.getLogger().info("Niveau de la mer élevé au niveau " + level);
+                    Bukkit.getLogger().info("Niveau de la mer élevé au niveau " + sealevel);
+                    setSealevel(sealevel); // Met à jour le niveau de la mer
+
+
                     cancel(); // Annule la tâche
                    }
             }

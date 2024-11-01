@@ -1,20 +1,22 @@
 package fr.lhaven.submersion.gamemode;
 
 
+import fr.lhaven.submersion.Submersion;
 import fr.lhaven.submersion.game.GameManager;
+import fr.lhaven.submersion.map.SeaLevelManager;
 import fr.lhaven.submersion.map.Terrain.Island;
 import fr.lhaven.submersion.map.Terrain.Terrain;
 import fr.lhaven.submersion.map.Terrain.Volcano;
 import fr.lhaven.submersion.players.PlayerManager;
 import fr.lhaven.submersion.utils.CustomBroadcast;
 import fr.lhaven.submersion.utils.LarguageManager;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.UUID;
 
 public class BattleRoyale extends GameMode {
 
     private GameManager gameManager;
-
     public BattleRoyale() {
         gameManager = GameManager.getInstance();
         this.isStarted = false;
@@ -57,11 +59,11 @@ public class BattleRoyale extends GameMode {
     @Override
     public void startGame() {
         System.out.println("Démarrage du mode Battle Royale !");
-        PlayerManager.getInstance().randomTeleportPlayers();
-    }
+        this.isStarted = true;
+        this.isRunning = true;
+        this.isFinished = false;
+        this.timeElapsed = 0;
 
-    @Override
-    public void configureParameters() {
-        // Aucune équipe à configurer, pas de paramètres spécifiques
+        PlayerManager.getInstance().randomTeleportPlayers();
     }
 }

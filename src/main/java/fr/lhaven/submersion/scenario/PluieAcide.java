@@ -7,7 +7,7 @@ import org.bukkit.World;
 
 public class PluieAcide
 {
-public void PluieAcide() {
+public static void PluieAcide() {
     World world = Bukkit.getWorld("world");
 
     if (world == null) {

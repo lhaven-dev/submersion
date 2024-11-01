@@ -15,7 +15,6 @@ public abstract class GameMode {
 
     protected int timeElapsed;
 
-    protected PlayerData PlayerWin;
 
 
 
@@ -24,8 +23,6 @@ public abstract class GameMode {
     public GameMode() {
 
     }
-
-
     public abstract void ChooseMap(String mapName);
 
     public abstract void addplayerToGame(UUID uuid);
@@ -38,5 +35,17 @@ public abstract class GameMode {
 
 
     // Méthode pour gérer les paramètres spécifiques à chaque mode de jeu
-    public abstract void configureParameters();
+
+    public boolean isFinished() {
+        return isFinished;
+    }
+
+    public boolean isRunning() {
+        return isRunning;
+    }
+
+    public void endGame() {
+        isFinished = true;
+        isRunning = false;
+    }
 }

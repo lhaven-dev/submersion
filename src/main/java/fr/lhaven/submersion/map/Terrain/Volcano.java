@@ -15,6 +15,7 @@ public class Volcano extends Terrain {
     public void generateTerrain() {
         this.mapName = "Volcano";
         this.borderSize = 300;
+        BorderManager.getInstance().setBorderSize(this.borderSize);
         // La ou la génération du terrain se fait
         // récuperer la map en ressources et la générer
     }
