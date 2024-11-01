@@ -23,13 +23,11 @@ public class ChoicePlayer {
 
     public static void ChoicePlayer(Player player) {
         Inventory inventory = Bukkit.createInventory(player, 9 * 6, "Choix des joueurs");
-
         for (Player p : Bukkit.getOnlinePlayers()) {
             if (inventory.firstEmpty() == -1) {
                 player.sendMessage("Too many players");
                 break;
             }
-
             ItemStack playerItem = new ItemStack(Material.PLAYER_HEAD);
             SkullMeta playerItemMeta = (SkullMeta) playerItem.getItemMeta();
             if (playerItemMeta != null) {
@@ -69,8 +67,6 @@ public class ChoicePlayer {
         if (item == null) {
             return;
         }
-
-        // Vérification pour le bouton "Undo"
         if (item.getType() == Material.YELLOW_WOOL && "annuler".equals(item.getItemMeta().getDisplayName())) {
             if (!hiddenPlayers.isEmpty()) {
                 Player lastHidden = hiddenPlayers.remove(hiddenPlayers.size() - 1);
@@ -95,7 +91,6 @@ public class ChoicePlayer {
             ReturnButton.handleReturnButtonClick(player);
         }
 
-        // Gestion du clic sur une tête de joueur
         if (item.getType() == Material.PLAYER_HEAD) {
             SkullMeta skullMeta = (SkullMeta) item.getItemMeta();
             if (skullMeta != null && skullMeta.getOwningPlayer() != null) {

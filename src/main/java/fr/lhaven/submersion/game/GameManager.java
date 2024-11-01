@@ -4,6 +4,7 @@ import fr.lhaven.submersion.gamemode.BattleRoyale;
 import fr.lhaven.submersion.gamemode.GameMode;
 import fr.lhaven.submersion.players.PlayerData;
 import fr.lhaven.submersion.players.PlayerManager;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 public class GameManager {
@@ -14,6 +15,11 @@ public class GameManager {
     private boolean gameCreated = false;
     private boolean gameEnded = false;
     private boolean gameResumed = false;
+
+    private boolean ScenarioPluieAcide = false;
+
+
+
     public boolean isGameStarted() {
         return gameStarted;
     }
@@ -32,7 +38,6 @@ public class GameManager {
 
     public void  AddToGame(Player player)
     {
-
         gameMode.addplayerToGame(player.getUniqueId());
         System.out.println(player.getName() + " added to game");
     }
@@ -51,6 +56,12 @@ public class GameManager {
         gameCreated = true;
         System.out.println("Game created");
         setGameMode("Battle Royale");
+        Bukkit.getOnlinePlayers().forEach(player -> {
+            if(!PlayerManager.getInstance().getPlayerList().containsKey(player.getUniqueId()))
+            {
+                AddToGame(player);
+            }
+        });
     }
 
     public void setGameMode(String mode) {
@@ -94,5 +105,13 @@ public class GameManager {
 
     public void resumeGame() {
         System.out.println("Game resumed");
+    }
+
+    public void setScenarioPluieAcide(boolean b) {
+        ScenarioPluieAcide = b;
+    }
+
+    public boolean isPluieAcide() {
+        return this.ScenarioPluieAcide;
     }
 }

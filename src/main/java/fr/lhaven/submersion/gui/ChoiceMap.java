@@ -33,7 +33,6 @@ public  class ChoiceMap {
         Volcano.setItemMeta(VolcanoMeta);
 
 
-
         ItemStack Retour = new ItemStack(Material.RED_WOOL);
         ItemMeta RetourMeta = Retour.getItemMeta();
         RetourMeta.setDisplayName("Retour");
@@ -54,13 +53,11 @@ public  class ChoiceMap {
                 player.sendMessage("Game map set to Island");
                 ChoicePlayer.ChoicePlayer(player);
                 break;
-
             case 15:
                 GameManager.getInstance().setMap("Volcano");
                 player.sendMessage("Game map set to Volcano");
                 ChoicePlayer.ChoicePlayer(player);
                 break;
-
             case 26:
                 ReturnButton.handleReturnButtonClick(player);
                 break;

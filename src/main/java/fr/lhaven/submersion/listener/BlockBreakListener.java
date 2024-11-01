@@ -11,4 +11,7 @@ public class BlockBreakListener implements Listener {
     public void onBlockBreak(BlockBreakEvent event) {
         event.setCancelled(true);
     }
+
 }
+
+

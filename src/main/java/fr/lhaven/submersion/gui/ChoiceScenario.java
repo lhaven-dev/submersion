@@ -1,6 +1,7 @@
 package fr.lhaven.submersion.gui;
 
 import fr.lhaven.submersion.Submersion;
+import fr.lhaven.submersion.game.GameManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -17,10 +18,10 @@ public class ChoiceScenario {
 public static void ChoiceScenario(Player player) {
     Inventory inventory = Bukkit.createInventory(player, 9*3, "Choix du Scenario");
 
-    ItemStack ScenarioUn = new ItemStack(Material.RED_BANNER);
-    ItemMeta ScenarioUnMeta = ScenarioUn.getItemMeta();
-    ScenarioUnMeta.setDisplayName("Pluie Acide");
-    ScenarioUn.setItemMeta(ScenarioUnMeta);
+    ItemStack PluieAcide = new ItemStack(Material.RED_BANNER);
+    ItemMeta PluieAcideMeta = PluieAcide.getItemMeta();
+    PluieAcideMeta.setDisplayName("Pluie Acide");
+    PluieAcide.setItemMeta(PluieAcideMeta);
 
 
     ItemStack ScenarioTwo = new ItemStack(Material.DIAMOND_SWORD);
@@ -38,7 +39,7 @@ public static void ChoiceScenario(Player player) {
     RetourMeta.setDisplayName("Retour");
     Retour.setItemMeta(RetourMeta);
 
-    inventory.setItem(11, ScenarioUn);
+    inventory.setItem(11, PluieAcide);
     inventory.setItem(13, ScenarioTwo);
     inventory.setItem(15, ScenarioTrois);
     inventory.setItem(26, Retour);
@@ -50,8 +51,18 @@ public static void ChoiceScenario(Player player) {
 public static void handleChoiceScenarioClick(Player player, int slot) {
     switch (slot) {
         case 11:
+            if(GameManager.getInstance().isGameCreated())
+            {
+                if(GameManager.getInstance().isPluieAcide() == false)
+                {
+                    GameManager.getInstance().setScenarioPluieAcide(true);
+                }
+                else
+                {
+                    GameManager.getInstance().setScenarioPluieAcide(false);
+                }
+            }
             break;
-
         case 15:
             // Action pour le slot 15
             break;
