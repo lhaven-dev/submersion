@@ -16,44 +16,47 @@ import java.util.Set;
 
 public class OnPlayerMoveListener implements Listener {
 
+    private final Set<Player> poisonedPlayers = new HashSet<>();
 
-        private final Set<Player> poisonedPlayers = new HashSet<>();
-
-        // Runnable pour appliquer le poison
-        public OnPlayerMoveListener() {
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    for (Player player : Bukkit.getOnlinePlayers()) {
-                        if (player.getLocation().getBlock().getType() == Material.WATER) {
-                            // Appliquer l'effet de poison si le joueur n'est pas déjà empoisonné
-                            if (!poisonedPlayers.contains(player)) {
-                                player.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 100, 1)); // Poison pendant 5 secondes
-                                poisonedPlayers.add(player);
-                            }
+    public OnPlayerMoveListener() {
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                for (Player player : Bukkit.getOnlinePlayers()) {
+                    if (player.getLocation().getBlock().getType() == Material.WATER) {
+                        if (!poisonedPlayers.contains(player)) {
+                            player.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 100, 0)); // Poison pendant 5 secondes
+                            poisonedPlayers.add(player);
                         } else {
-                            // Retirer le joueur de la liste s'il n'est plus dans l'eau
+                            if (player.hasPotionEffect(PotionEffectType.POISON)) {
+                                PotionEffect poisonEffect = player.getPotionEffect(PotionEffectType.POISON);
+                                if (poisonEffect.getDuration() <= 20) { // Moins de 1 seconde restante
+                                    player.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 100, 0)); // Poison pendant 5 secondes
+                                }
+                            }
+                        }
+                    } else {
+                        if (poisonedPlayers.contains(player)) {
                             poisonedPlayers.remove(player);
                         }
                     }
                 }
-            }.runTaskTimer(Submersion.getPlugin(Submersion.class), 0, 20); // Toutes les 20 ticks (1 seconde)
-        }
+            }
+        }.runTaskTimer(Submersion.getPlugin(Submersion.class), 0, 20); // Vérifie toutes les secondes
+    }
 
-        @EventHandler
-        public void onPlayerMove(PlayerMoveEvent event) {
-            Player player = event.getPlayer();
-
-            // Si le joueur entre dans l'eau, on applique l'effet de poison
-            if (player.getLocation().getBlock().getType() == Material.WATER) {
-                if (!poisonedPlayers.contains(player)) {
-                    player.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 100, 1)); // Poison pendant 5 secondes
-                    poisonedPlayers.add(player);
-                }
-            } else {
-                // Retirer le joueur de la liste s'il n'est plus dans l'eau
+    @EventHandler
+    public void onPlayerMove(PlayerMoveEvent event) {
+        Player player = event.getPlayer();
+        if (player.getLocation().getBlock().getType() == Material.WATER) {
+            if (!poisonedPlayers.contains(player)) {
+                player.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 100, 0)); // Poison pendant 5 secondes
+                poisonedPlayers.add(player);
+            }
+        } else {
+            if (poisonedPlayers.contains(player)) {
                 poisonedPlayers.remove(player);
             }
         }
     }
-
+}
