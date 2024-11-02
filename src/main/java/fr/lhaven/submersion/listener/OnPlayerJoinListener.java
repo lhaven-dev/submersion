@@ -14,8 +14,6 @@ public class OnPlayerJoinListener implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        getLogger().info("Joueur " + player.getName());
-
         // Vérifier si le joueur existe déjà dans PlayerManager
         PlayerData playerData = PlayerManager.getInstance().getPlayerData(player.getUniqueId());
 
@@ -28,6 +26,7 @@ public class OnPlayerJoinListener implements Listener {
         } else {
             // Si le joueur existe déjà, on le marque comme "connecté"
                 PlayerManager.getInstance().setConnected(player.getUniqueId());
+                System.out.println("Player " + player.getName() + " reconnected");
         }
     }
 }
