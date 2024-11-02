@@ -1,12 +1,9 @@
 package fr.lhaven.submersion.game;
 
-import fr.lhaven.submersion.Submersion;
 import fr.lhaven.submersion.game.gamemode.BattleRoyale;
 import fr.lhaven.submersion.game.gamemode.GameMode;
 import fr.lhaven.submersion.utils.SeaLevelManager;
-import fr.lhaven.submersion.map.Terrain.Terrain;
 import fr.lhaven.submersion.players.PlayerManager;
-import fr.lhaven.submersion.scenario.PluieAcide;
 import fr.lhaven.submersion.utils.Scoreboards;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -16,7 +13,6 @@ public class GameManager {
 
     private GameMode gameMode;
     private String gamemodeName;
-    private BukkitRunnable gameTimer;
     private final Scoreboards Scoreboards = new Scoreboards();
     private boolean gameStarted = false;
     private boolean gameCreated = false;
@@ -111,7 +107,6 @@ public class GameManager {
     public void endGame() {
         gameEnded = true;
         gameMode.endGame();
-        gameTimer.cancel(); // Arrête le timer
         System.out.println("La partie est terminée. Merci d'avoir joué !");
     }
 

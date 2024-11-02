@@ -21,7 +21,7 @@ public class PlayerDeathListener implements Listener {
         // Vérifier si les données du joueur existent
         if (playerData != null) {
             // Mettre à jour l'état du joueur à "mort"
-            playerData.setState(PlayerState.DEAD);
+            PlayerManager.getInstance().setDead(player.getUniqueId());
         }
 
         // Vous pouvez également ajouter des messages ou d'autres logiques ici, si nécessaire

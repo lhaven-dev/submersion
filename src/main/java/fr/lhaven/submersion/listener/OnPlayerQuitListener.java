@@ -16,11 +16,10 @@ public class OnPlayerQuitListener implements Listener {
         Player player = event.getPlayer();
         // Récupérer les données du joueur dans PlayerManager
         PlayerData playerData = PlayerManager.getInstance().getPlayerData(player.getUniqueId());
-
         // Vérifier si les données du joueur existent
         if (playerData != null) {
             // Mettre à jour l'état du joueur à "déconnecté"
-            playerData.setState(PlayerState.DISCONNECTED);
+            PlayerManager.getInstance().setDisconnected(player.getUniqueId());
             // TODO: Gérer le cas où le joueur se déconnecte en plein jeu
         }
     }
