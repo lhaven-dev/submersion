@@ -17,13 +17,10 @@ import java.util.Set;
 public class OnPlayerMoveListener implements Listener {
 
 
-
-    public class WaterEffectListener implements Listener {
-
         private final Set<Player> poisonedPlayers = new HashSet<>();
 
         // Runnable pour appliquer le poison
-        public WaterEffectListener() {
+        public OnPlayerMoveListener() {
             new BukkitRunnable() {
                 @Override
                 public void run() {
