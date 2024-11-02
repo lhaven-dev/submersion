@@ -14,13 +14,12 @@ public final class Submersion extends JavaPlugin {
 
         this.getCommand("creategame").setExecutor(new CreateGameCommand());
 
-
         getServer().getPluginManager().registerEvents(new OnBlockBreakListener(), this);
         getServer().getPluginManager().registerEvents(new OnPlayerJoinListener(), this);
         getServer().getPluginManager().registerEvents(new OnChestListener(), this);
         getServer().getPluginManager().registerEvents(new GuiListener(), this);
         getServer().getPluginManager().registerEvents(new OnPlayerQuitListener(), this);
-
+        getServer().getPluginManager().registerEvents(new PlayerDeathListener(), this);
 
     }
 
