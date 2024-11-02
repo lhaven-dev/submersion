@@ -1,11 +1,9 @@
 package fr.lhaven.submersion.utils;
 
-import fr.lhaven.submersion.map.BorderManager;
 import fr.lhaven.submersion.players.PlayerManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
-import java.util.HashMap;
 import java.util.Random;
 
 public class LarguageManager {
@@ -43,20 +41,20 @@ public class LarguageManager {
     }
 
 
-    public void Start() {
+     public void Start() {
     System.out.println("Larguage started");
-        int Border = BorderManager.getInstance().getBorderSize();
-        PlayerManager.getInstance().getPlayerList().forEach((uuid, playerData) -> {
-          System.out.println("Larguage player: " + playerData.getPlayer().getName());
-          if (playerData.getPlayer().isOnline()) {
-            if (!playerData.isSpectator()) {
-                Location location = getlocation(Border);
-                Bukkit.getPlayer(uuid).teleport(location);
-                CustomBroadcast.StartGameBroadcast(playerData.getPlayer());
-                System.out.println("Larguage player: " + playerData.getPlayer().getName());
-            }
-        }
-    });
+        // int Border = BorderManager.getInstance().getBorderSize();
+        // PlayerManager.getInstance().getPlayerList().forEach((uuid, playerData) -> {
+        //  System.out.println("Larguage player: " + playerData.getPlayer().getName());
+        //  if (playerData.getPlayer().isOnline()) {
+        //    if (!playerData.isSpectator()) {
+        //        Location location = getlocation(Border);
+        //        Bukkit.getPlayer(uuid).teleport(location);
+        //        CustomBroadcast.StartGameBroadcast(playerData.getPlayer());
+        //        System.out.println("Larguage player: " + playerData.getPlayer().getName());
+        //    }
+       // }
+  //  });
   }
 
 

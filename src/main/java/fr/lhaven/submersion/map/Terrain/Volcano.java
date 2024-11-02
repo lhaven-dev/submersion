@@ -1,6 +1,6 @@
 package fr.lhaven.submersion.map.Terrain;
 
-import fr.lhaven.submersion.map.BorderManager;
+import fr.lhaven.submersion.utils.BorderManager;
 
 public class Volcano extends Terrain {
 

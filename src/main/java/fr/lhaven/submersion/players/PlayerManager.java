@@ -1,9 +1,10 @@
 package fr.lhaven.submersion.players;
-import fr.lhaven.submersion.utils.LarguageManager;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 
-import java.util.*;
+import fr.lhaven.submersion.utils.LarguageManager;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 public class PlayerManager {
     private static PlayerManager instance;
@@ -12,11 +13,10 @@ public class PlayerManager {
     private int aliveCount = 0;
     private int disconnectedCount = 0;
 
-    private int DeadCount = 0;
     private Map<UUID, PlayerData> playerDataMap = new HashMap<>();
 
     private PlayerManager() {
-        playerDataMap = new HashMap<>(); // On initialise la map des Joueurs
+        playerDataMap = new HashMap<>();
     }
 
     public static PlayerManager getInstance() {
@@ -27,32 +27,21 @@ public class PlayerManager {
     }
 
     public void setAliveCount() {
-        int aliveCount = 0;
+        aliveCount = 0;
         for (PlayerData playerData : playerDataMap.values()) {
             if (playerData.isAlive()) {
                 aliveCount++;
             }
         }
-        this.aliveCount = aliveCount;
     }
 
     public void setSpectatorCount() {
-        int spectatorCount = 0;
+        spectatorCount = 0;
         for (PlayerData playerData : playerDataMap.values()) {
             if (playerData.isSpectator()) {
                 spectatorCount++;
             }
         }
-        this.spectatorCount = spectatorCount;
-    }
-    public Map<UUID, PlayerData> getPlayerList() {
-        if(playerDataMap == null){
-            System.out.println("La liste des joueurs est vide");
-        }
-        else {
-            return playerDataMap;
-        }
-        return null;
     }
 
     public void addPlayer(UUID uuid) {
@@ -64,64 +53,62 @@ public class PlayerManager {
     }
 
     public PlayerData getPlayerData(UUID uuid) {
-        PlayerData playerData = playerDataMap.get(uuid);
-        if (playerData == null) {
-            System.out.println("L'utilisateur avec l'UUID " + uuid + " n'existe pas.");
-            return null;
-        }
-        return playerData;
+        return playerDataMap.get(uuid);
     }
-
-    public void removePlayer(UUID uuid) {
-            if (playerDataMap.containsKey(uuid)) {
-                playerDataMap.remove(uuid);
-                System.out.println("L'utilisateur avec l'UUID " + uuid + " a été supprimé.");
-            } else {
-                System.out.println("L'utilisateur avec l'UUID " + uuid + " n'existe pas, aucune action effectuée.");
-            }
-        }
 
     public void removeSpectator(UUID uuid) {
-        playerDataMap.get(uuid).setSpectator(false);
-        --spectatorCount;
+        PlayerData data = playerDataMap.get(uuid);
+        if (data != null) {
+            data.setState(PlayerState.ALIVE);
+            --spectatorCount;
+        }
     }
 
-    public void SetAlive(UUID uuid) {
-        playerDataMap.get(uuid).setAlive(false);
-        ++aliveCount;
-    }
-    public void SetDead(UUID uuid) {
-        playerDataMap.get(uuid).setAlive(false);
-        --aliveCount;
+    public void setAlive(UUID uuid) {
+        PlayerData data = playerDataMap.get(uuid);
+        if (data != null) {
+            data.setState(PlayerState.ALIVE);
+            ++aliveCount;
+        }
     }
 
-    public void SetDisconnected(UUID uuid) {
-        playerDataMap.get(uuid).setDisconnected(true);
-        ++disconnectedCount;
+    public void setDead(UUID uuid) {
+        PlayerData data = playerDataMap.get(uuid);
+        if (data != null) {
+            data.setState(PlayerState.DEAD);
+            --aliveCount;
+        }
     }
-    public void SetConnected(UUID uuid) {
-        playerDataMap.get(uuid).setDisconnected(false);
-        --disconnectedCount;
+
+    public void setDisconnected(UUID uuid) {
+        PlayerData data = playerDataMap.get(uuid);
+        if (data != null) {
+            data.setState(PlayerState.DISCONNECTED);
+            ++disconnectedCount;
+        }
+    }
+
+    public void setConnected(UUID uuid) {
+        PlayerData data = playerDataMap.get(uuid);
+        if (data != null) {
+            data.setState(PlayerState.ALIVE); // Ou un autre état si nécessaire
+            --disconnectedCount;
+        }
     }
 
     public void addSpectator(UUID uuid) {
-        playerDataMap.get(uuid).setSpectator(true);
-        ++spectatorCount;
+        PlayerData data = playerDataMap.get(uuid);
+        if (data != null) {
+            data.setState(PlayerState.SPECTATOR);
+            ++spectatorCount;
+        }
     }
 
     public void randomTeleportPlayers() {
-                LarguageManager.getInstance().Start();
+        LarguageManager.getInstance().Start();
     }
-
-
 
     public int getAlivePlayersCount() {
         return aliveCount;
     }
 }
-
-
-
-
-
-

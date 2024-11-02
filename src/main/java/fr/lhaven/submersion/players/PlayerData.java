@@ -6,43 +6,34 @@ import org.bukkit.entity.Player;
 import java.util.UUID;
 
 public class PlayerData {
-    private boolean alive = true;
     private Player player;
-    private boolean isSpectator = false;
-
-    private boolean isdisconnected = false;
+    private PlayerState state = PlayerState.ALIVE; // État par défaut
 
     public PlayerData(UUID uuid) {
         this.player = Bukkit.getPlayer(uuid);
-        this.alive = true; // Le joueur commence en vie
     }
 
     public Player getPlayer() {
         return player;
     }
 
-    public boolean isAlive() {
-        return alive;
+    public PlayerState getState() {
+        return state;
     }
 
-    public void setAlive(boolean alive) {
-        this.alive = alive;
+    public void setState(PlayerState state) {
+        this.state = state;
+    }
+
+    public boolean isAlive() {
+        return state == PlayerState.ALIVE;
     }
 
     public boolean isSpectator() {
-        return this.isSpectator;
+        return state == PlayerState.SPECTATOR;
     }
 
-    public void setSpectator(boolean spectator) {
-        this.isSpectator = spectator;
-    }
-
-    public void setDisconnected(boolean disconnected) {
-        this.isdisconnected = disconnected;
-    }
-
-    public boolean isdisconnected() {
-        return this.isdisconnected;
+    public boolean isDisconnected() {
+        return state == PlayerState.DISCONNECTED;
     }
 }
-

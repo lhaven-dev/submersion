@@ -1,8 +1,10 @@
 package fr.lhaven.submersion.gui;
 
 import fr.lhaven.submersion.Submersion;
-import fr.lhaven.submersion.game.GameManager;
+import fr.lhaven.submersion.players.PlayerData;
 import fr.lhaven.submersion.players.PlayerManager;
+import fr.lhaven.submersion.game.GameManager;
+import fr.lhaven.submersion.players.PlayerState;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -14,35 +16,42 @@ import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 
 import java.util.Collections;
+import java.util.UUID;
 
 import static fr.lhaven.submersion.gui.MenuType.CHOICE_PLAYER;
 
 public class ChoicePlayer {
 
-    public static void ChoicePlayer(Player player) {
+    public static void openPlayerChoiceMenu(Player player) {
         Inventory inventory = Bukkit.createInventory(player, 9 * 6, "Choix des joueurs");
 
-        for (Player p : Bukkit.getOnlinePlayers()) {
+        // Récupérer tous les joueurs en ligne et ajouter leurs têtes à l'inventaire
+        for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+            System.out.println(onlinePlayer.getName());
+            UUID playerUUID = onlinePlayer.getUniqueId();
+            PlayerData playerData = PlayerManager.getInstance().getPlayerData(playerUUID);
             ItemStack playerItem = new ItemStack(Material.PLAYER_HEAD);
             SkullMeta playerItemMeta = (SkullMeta) playerItem.getItemMeta();
-            if (playerItemMeta != null) {
-                playerItemMeta.setOwningPlayer(p);
-                playerItemMeta.setDisplayName(p.getName());
-                playerItemMeta.setLore(Collections.singletonList("Spectateur : false"));
 
+            if (playerItemMeta != null && playerData != null) {
+                System.out.println(playerData.getState());
+                playerItemMeta.setOwningPlayer(onlinePlayer);
+                playerItemMeta.setDisplayName(onlinePlayer.getName());
+                String spectatorStatus = playerData.isSpectator() ? "Spectateur : true" : "Spectateur : false";
+                playerItemMeta.setLore(Collections.singletonList(spectatorStatus));
                 playerItem.setItemMeta(playerItemMeta);
-
                 inventory.addItem(playerItem);
             }
         }
 
+        // Création des boutons "Retour" et "Annuler"
         ItemStack retour = new ItemStack(Material.RED_WOOL);
-        retour.getItemMeta().setDisplayName("Retour");
+        ItemMeta retourMeta = retour.getItemMeta();
+        if (retourMeta != null) {
+            retourMeta.setDisplayName("Retour");
+            retour.setItemMeta(retourMeta);
+        }
         inventory.setItem(inventory.getSize() - 1, retour);
-
-        ItemStack undo = new ItemStack(Material.YELLOW_WOOL);
-        undo.getItemMeta().setDisplayName("Annuler");
-        inventory.setItem(inventory.getSize() - 2, undo);
 
         player.closeInventory();
         player.setMetadata("OpenedMenu", new FixedMetadataValue(Submersion.getPlugin(Submersion.class), CHOICE_PLAYER.getMetaKey()));
@@ -51,48 +60,45 @@ public class ChoicePlayer {
 
     public static void handleChoicePlayerClick(Player player, int slot, ClickType clickType) {
         Inventory openInventory = player.getOpenInventory().getTopInventory();
-
         ItemStack item = openInventory.getItem(slot);
 
         // Gestion du bouton retour
-        if (item.getType() == Material.RED_WOOL) {
+        if (item != null && item.getType() == Material.RED_WOOL) {
             ReturnButton.handleReturnButtonClick(player);
+            return;
         }
 
-        if (item == null) return;
-        SkullMeta skullMeta = (SkullMeta) item.getItemMeta();
-        if (skullMeta == null || skullMeta.getOwningPlayer() == null) return;
+        if (item == null || !(item.getItemMeta() instanceof SkullMeta)) return;
 
-        Player targetPlayer = skullMeta.getOwningPlayer().getPlayer();
+        SkullMeta skullMeta = (SkullMeta) item.getItemMeta();
+        Player targetPlayer = skullMeta.getOwningPlayer() != null ? skullMeta.getOwningPlayer().getPlayer() : null;
 
         if (targetPlayer != null) {
             // Récupérer la description pour déterminer l'état du joueur
             String lore = skullMeta.getLore() != null && !skullMeta.getLore().isEmpty() ? skullMeta.getLore().get(0) : "";
 
-            // Si le joueur est en mode spectateur
+            PlayerData targetPlayerData = PlayerManager.getInstance().getPlayerData(targetPlayer.getUniqueId());
+
             if (lore.equals("Spectateur : true")) {
-                if (clickType.isLeftClick()) {
+                if (clickType.isLeftClick() && targetPlayerData != null) {
                     // Redevenir joueur normal
                     player.sendMessage(targetPlayer.getName() + " n'est plus en mode spectateur.");
-                    GameManager.getInstance().removeSpecator(targetPlayer);
-
-                    // Mettre à jour la tête avec le nouvel état
-                    skullMeta.setLore(Collections.singletonList("Spectateur : false"));
-                    item.setItemMeta(skullMeta);
+                    PlayerManager.getInstance().removeSpectator(targetPlayer.getUniqueId());
+                    updatePlayerItemLore(item, skullMeta, false);
                 }
-            }
-            // Si le joueur est en mode normal
-            else {
-                if (clickType.isRightClick()) {
+            } else {
+                if (clickType.isRightClick() && targetPlayerData != null) {
                     // Devenir spectateur
                     player.sendMessage(targetPlayer.getName() + " est maintenant en mode spectateur.");
-                    GameManager.getInstance().setSpectator(targetPlayer);
-
-                    // Mettre à jour la tête avec le nouvel état
-                    skullMeta.setLore(Collections.singletonList("Spectateur : true"));
-                    item.setItemMeta(skullMeta);
+                    PlayerManager.getInstance().addSpectator(targetPlayer.getUniqueId());
+                    updatePlayerItemLore(item, skullMeta, true);
                 }
             }
         }
+    }
+
+    private static void updatePlayerItemLore(ItemStack item, SkullMeta skullMeta, boolean isSpectator) {
+        skullMeta.setLore(Collections.singletonList("Spectateur : " + (isSpectator ? "true" : "false")));
+        item.setItemMeta(skullMeta);
     }
 }

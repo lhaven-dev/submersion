@@ -1,4 +1,4 @@
-package fr.lhaven.submersion.map;
+package fr.lhaven.submersion.utils;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -60,16 +60,11 @@ public class SeaLevelManager {
                         for (int y = sealevel; y <= sealevel + 1; y++) { // Remplir la couche d'eau
                             World world = Bukkit.getServer().getWorld("world");
                             Block block = world.getBlockAt(x, y, z);
-
-
-
                                 if (block.getBlockData() instanceof Waterlogged) {
                                     Waterlogged waterlogged = (Waterlogged) block.getBlockData();
-
                                     if (!waterlogged.isWaterlogged()) {
                                         waterlogged.setWaterlogged(true);  // Active le waterlogging
                                         block.setBlockData(waterlogged);   // Applique la modification au bloc
-                                        System.out.println("Le bloc a été transformé en waterloggable.");
                                         finished = false; // S'il y a eu un changement, on n'est pas fini
                                     }
                                 }
@@ -84,8 +79,6 @@ public class SeaLevelManager {
                 if (finished) {
                     Bukkit.getLogger().info("Niveau de la mer élevé au niveau " + sealevel);
                     setSealevel(sealevel); // Met à jour le niveau de la mer
-
-
                     cancel(); // Annule la tâche
                    }
             }

@@ -32,6 +32,11 @@ public  class MenuPrincipal {
         MapMeta.setDisplayName("map");
         Map.setItemMeta(MapMeta);
 
+        ItemStack Players = new ItemStack(Material.YELLOW_BANNER);
+        ItemMeta PlayersMeta = Map.getItemMeta();
+        PlayersMeta.setDisplayName("Players");
+        Players.setItemMeta(PlayersMeta);
+
         ItemStack Start = new ItemStack(Material.YELLOW_BANNER);
         ItemMeta Startmeta = Map.getItemMeta();
         Startmeta.setDisplayName("Start");
@@ -44,9 +49,10 @@ public  class MenuPrincipal {
         RetourMeta.setDisplayName("Retour");
         Retour.setItemMeta(RetourMeta);
 
-        inventory.setItem(11, Gamemode);
-        inventory.setItem(13, Map);
-        inventory.setItem(15, Start);
+        inventory.setItem(10, Gamemode);
+        inventory.setItem(12, Map);
+        inventory.setItem(14, Players);
+        inventory.setItem(16, Start);
         inventory.setItem(26, Retour);
         player.closeInventory();
         player.setMetadata("OpenedMenu", new FixedMetadataValue(Submersion.getPlugin(Submersion.class),MENU_PRINCIPAL.getMetaKey()));
@@ -55,14 +61,17 @@ public  class MenuPrincipal {
 
     public static void handleMenuPrincipalClick(Player player, int slot) {
         switch (slot) {
-            case 11:
-                ChoiceScenario.ChoiceScenario(player);
+            case 10:
+                ChoiceScenario.openChoiceScenario(player);
                 break;
-            case 15:
+            case 16:
                 GameManager.getInstance().startGame();
                 break;
-            case 13:
-                ChoiceMap.ChoiceMap(player);
+            case 12:
+                ChoiceMap.openChoiceMap(player);
+                break;
+            case 14:
+                ChoicePlayer.openPlayerChoiceMenu(player);
                 break;
             case 26:
                 ReturnButton.handleReturnButtonClick(player);
