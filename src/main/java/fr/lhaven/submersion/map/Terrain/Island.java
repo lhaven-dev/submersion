@@ -7,7 +7,7 @@ public class Island extends Terrain {
     public Island() {
         this.mapName = "Island";
         this.borderSize = 300;
-        BorderManager.getInstance().setBorderSize(this.borderSize);
+        generateBorder();
     }
 
     @Override

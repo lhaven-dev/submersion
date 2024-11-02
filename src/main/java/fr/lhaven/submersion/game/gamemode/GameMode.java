@@ -1,10 +1,12 @@
 package fr.lhaven.submersion.game.gamemode;
 
 import fr.lhaven.submersion.Submersion;
+import fr.lhaven.submersion.game.GameManager;
 import fr.lhaven.submersion.map.Terrain.Terrain;
 import fr.lhaven.submersion.players.PlayerManager;
 import fr.lhaven.submersion.scenario.ScenarioManager;
 import fr.lhaven.submersion.utils.SeaLevelManager;
+import fr.lhaven.submersion.utils.SubmersionScoreboard;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.UUID;
@@ -14,7 +16,7 @@ public abstract class GameMode {
     protected boolean isStarted;
     protected boolean isFinished;
     protected boolean isRunning;
-    protected int timeElapsed;
+    protected static int timeElapsed;
     public GameMode() {
         this.isStarted = false;
         this.isFinished = false;
@@ -34,6 +36,7 @@ public abstract class GameMode {
     }
 
     public void incrementTimeElapsed() {
+      //  Scoreboards.updateGlobalScore("temps", this.getTimeElapsed());
         timeElapsed++;
     }
 
@@ -43,6 +46,7 @@ public abstract class GameMode {
         if (gameTimer != null) {
             gameTimer.stop();
         }
+        GameManager.getInstance().endGame();
     }
 
     protected void startGameTimer() {
@@ -66,8 +70,10 @@ public abstract class GameMode {
         public void run() {
             if (gameMode.isRunning() && !gameMode.isFinished()) {
                 gameMode.incrementTimeElapsed(); // Incrémente le temps
+                SubmersionScoreboard.getInstance().updateTime(timeElapsed); // Met à jour le scoreboard
                 gameMode.checkWaterLevelIncrease(); // Vérifie l'augmentation du niveau d'eau
                 gameMode.triggerRandomEvents(); // Déclenche les événements aléatoires
+               // gameMode.checkEndOfGame(); // Vérifie la fin du jeu
 
             } else {
                 this.cancel(); // Arrête le timer quand le jeu est fini
@@ -82,10 +88,16 @@ public abstract class GameMode {
     public void checkWaterLevelIncrease() {
         if (timeElapsed % 300 == 0) { // toutes les 5 minutes (300 secondes)
             SeaLevelManager.getInstance().updateSeaLevel(SeaLevelManager.getInstance().getSealevel() + 1);
-            System.out.println("Le niveau d'eau a monté !");
+            System.out.println("Le niveau d'eau va monté !" + SeaLevelManager.getInstance().getSealevel());
         }
     }
-
+    private void checkEndOfGame() {
+        int alivePlayers = PlayerManager.getInstance().getAlivePlayersCount();
+        if (alivePlayers <= 1) {
+            System.out.println("Un seul joueur en vie. Fin de la partie !");
+            endGame();
+        }
+    }
     public void triggerRandomEvents() {
         if (timeElapsed % 300 == 0) { // toutes les 5 minutes (300 secondes)
             double random = Math.random();
@@ -93,7 +105,6 @@ public abstract class GameMode {
                 System.out.println("Un événement aléatoire a eu lieu !");
                 if (ScenarioManager.getInstance().getScenarioStatus("pluie Acide") &&
                         !ScenarioManager.getInstance().getScenarioStatus("PluieAcideActivated")) {
-                    // Code pour gérer l'événement de pluie acide
                 }
             }
         }

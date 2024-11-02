@@ -23,7 +23,7 @@ public class BattleRoyale extends GameMode {
         this.isRunning = true;
         this.isFinished = false;
         this.timeElapsed = 0;
-
+        startGameTimer();
         PlayerManager.getInstance().randomTeleportPlayers();
     }
     public Terrain getCurrentMap() {

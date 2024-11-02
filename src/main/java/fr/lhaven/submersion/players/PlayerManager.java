@@ -1,6 +1,7 @@
 package fr.lhaven.submersion.players;
 
 import fr.lhaven.submersion.utils.LarguageManager;
+import fr.lhaven.submersion.utils.SubmersionScoreboard;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -78,7 +79,7 @@ public class PlayerManager {
             data.setState(PlayerState.DEAD);
             --aliveCount;
         }
-    }
+        SubmersionScoreboard.getInstance().updateRemainingPlayers(aliveCount);    }
 
     public void setDisconnected(UUID uuid) {
         PlayerData data = playerDataMap.get(uuid);

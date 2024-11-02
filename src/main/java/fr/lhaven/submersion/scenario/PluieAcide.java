@@ -9,13 +9,15 @@ import org.bukkit.World;
 public class PluieAcide {
 
     private static boolean isActive = false; // Statut du scénario
+    private static boolean hasAlreadyActivated  = false; // Statut de l'activation
 
     public static void startPluieAcide() {
-        if (isActive) {
+        if (isActive || hasAlreadyActivated) {
             return; // Si déjà actif, ne rien faire
         }
 
         isActive = true; // Marque comme actif
+        hasAlreadyActivated = true; // Marque comme déjà activé
         World world = Bukkit.getWorld("world");
 
         if (world == null) {

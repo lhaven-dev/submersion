@@ -44,20 +44,18 @@ public class SeaLevelManager {
         new BukkitRunnable() {
 
            int borderSize = borderManager.getBorderSize();
-
             @Override
             public void run() {
-                // Récupère la taille de la bordure
+                System.out.println("borderSize:" + borderSize);
                 int minX = (int) (-borderSize / 2); // Centre à (0, 0)
                 int maxX = (int) (borderSize / 2);
                 int minZ = (int) (-borderSize / 2);
                 int maxZ = (int) (borderSize / 2);
-
                 boolean finished = true; // Flag pour suivre si tout est terminé
-
+                System.out.println("y:" + level);
                 for (int x = minX; x <= maxX; x++) {
                     for (int z = minZ; z <= maxZ; z++) {
-                        for (int y = sealevel; y <= sealevel + 1; y++) { // Remplir la couche d'eau
+                        for (int y = level; y <= level ; y++) { // Remplir la couche d'eau
                             World world = Bukkit.getServer().getWorld("world");
                             Block block = world.getBlockAt(x, y, z);
                                 if (block.getBlockData() instanceof Waterlogged) {
@@ -77,8 +75,9 @@ public class SeaLevelManager {
                 }
 
                 if (finished) {
-                    Bukkit.getLogger().info("Niveau de la mer élevé au niveau " + sealevel);
-                    setSealevel(sealevel); // Met à jour le niveau de la mer
+                    Bukkit.getLogger().info("Niveau de la mer élevé au niveau " + level);
+                    setSealevel(level); // Met à jour le niveau de la mer
+                    SubmersionScoreboard.getInstance().updateWaterLevel(level);
                     cancel(); // Annule la tâche
                    }
             }
