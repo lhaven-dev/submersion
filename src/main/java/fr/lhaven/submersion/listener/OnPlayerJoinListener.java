@@ -8,7 +8,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 import static org.bukkit.Bukkit.getLogger;
 
-public class PlayerJoinListener implements Listener {
+public class OnPlayerJoinListener implements Listener {
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
