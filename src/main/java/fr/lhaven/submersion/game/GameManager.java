@@ -81,6 +81,10 @@ public class GameManager {
     }
 
     public void startGame() {
+        if (gameStarted) {
+            System.out.println("Game already started");
+            return;
+        }
         System.out.println("Game started");
         gameMode.startGame();
         gameStarted = true;
@@ -89,6 +93,7 @@ public class GameManager {
         for (Player player : Bukkit.getOnlinePlayers()) {
             SubmersionScoreboard.getInstance().initializeScoreboard(player);
         }
+        PlayerManager.getInstance().randomTeleportPlayers();
 
     }
 

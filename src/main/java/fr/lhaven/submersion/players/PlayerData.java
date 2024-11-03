@@ -8,6 +8,7 @@ import java.util.UUID;
 
 public class PlayerData {
     private Player player;
+    private boolean haveLanding = false;
     private PlayerState state = PlayerState.ALIVE; // État par défaut
 
     private int kills = 0;
@@ -46,5 +47,15 @@ public class PlayerData {
 
     public boolean isDisconnected() {
         return state == PlayerState.DISCONNECTED;
+    }
+
+
+
+    public void setHaveLanding(boolean b) {
+        haveLanding = b;
+    }
+
+    public boolean isHaveLanding() {
+        return haveLanding;
     }
 }

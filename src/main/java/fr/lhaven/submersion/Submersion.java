@@ -22,6 +22,7 @@ public final class Submersion extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerDeathListener(), this);
         getServer().getPluginManager().registerEvents(new OnPlayerMoveListener(), this);
         getServer().getPluginManager().registerEvents(new OnPlayerKillListener(), this);
+        getServer().getPluginManager().registerEvents(new OnElytraBreakListener(), this);
 
     }
 

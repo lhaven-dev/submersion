@@ -48,8 +48,6 @@ public class PlayerManager {
     public void addPlayer(UUID uuid) {
         if (!playerDataMap.containsKey(uuid)) {
             playerDataMap.put(uuid, new PlayerData(uuid));
-        } else {
-            System.out.println("L'utilisateur existe déjà : " + playerDataMap.get(uuid).getPlayer().getName());
         }
     }
 
@@ -106,9 +104,16 @@ public class PlayerManager {
     }
 
     public void randomTeleportPlayers() {
-        LarguageManager.getInstance().Start();
-    }
 
+        for (PlayerData playerData : playerDataMap.values()) {
+            if (playerData.isAlive() && !playerData.isSpectator() && playerData.getPlayer().isOnline()) {
+                {
+                    LarguageManager.getInstance().Start(playerData);
+
+                }
+            }
+        }
+    }
     public int getAlivePlayersCount() {
         return aliveCount;
     }
