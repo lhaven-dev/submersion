@@ -6,6 +6,7 @@ import fr.lhaven.submersion.game.gamemode.GameMode;
 import fr.lhaven.submersion.map.MapManager;
 import fr.lhaven.submersion.map.Terrain.Island;
 import fr.lhaven.submersion.players.PlayerManager;
+import fr.lhaven.submersion.utils.DisconnectedManager;
 import fr.lhaven.submersion.utils.SeaLevelManager;
 import fr.lhaven.submersion.utils.SubmersionScoreboard;
 import org.bukkit.Bukkit;
@@ -15,7 +16,6 @@ import org.bukkit.scoreboard.Scoreboard;
 public class GameManager {
 
     private GameMode gameMode;
-    private String gamemodeName;
     private boolean gameStarted = false;
     private boolean gameCreated = false;
     private boolean gameEnded = false;
@@ -46,6 +46,23 @@ public class GameManager {
     }
 
 
+    public void deleteGame() {
+        if (gameCreated) {
+            gameCreated = false;
+            gameStarted = false;
+            gameEnded = false;
+            System.out.println("Game deleted");
+            PlayerManager.getInstance().deletePlayers();
+            MapManager.getInstance().deleteMap();
+            SeaLevelManager.getInstance().deleteSeaLevel();
+            scoreboard.deleteScoreboard();
+            gameMode = null;
+
+        } else {
+            System.out.println("Game not created yet");
+        }
+    }
+
     public void createGame() {
         if (gameCreated) {
             System.out.println("Game already created");
@@ -64,17 +81,8 @@ public class GameManager {
 
     public void setGameMode(String mode) {
         if (gameCreated) {
-            if (gamemodeName != mode) {
-                if (mode == "Battle Royale") {
-                    this.gamemodeName = mode;
-                    this.gameMode = new BattleRoyale();
-                    System.out.println("Gamemode Choisi" + mode);
-                } else {
-                    System.out.println("Game mode already set to " + mode);
-                }
-            } else {
-                System.out.println("Game mode " + mode + " not found");
-            }
+            this.gameMode = new BattleRoyale();
+            System.out.println("Game mode set to " + mode);
         } else {
             System.out.println("Game not created yet");
         }
@@ -85,16 +93,16 @@ public class GameManager {
             System.out.println("Game already started");
             return;
         }
-        System.out.println("Game started");
+        DisconnectedManager.getInstance();
         gameMode.startGame();
         gameStarted = true;
         PlayerManager.getInstance().setSpectatorCount();
         PlayerManager.getInstance().setAliveCount();
+        System.out.println("Game started");
         for (Player player : Bukkit.getOnlinePlayers()) {
             SubmersionScoreboard.getInstance().initializeScoreboard(player);
         }
         PlayerManager.getInstance().randomTeleportPlayers();
-
     }
 
     public long GetTime() {
@@ -106,7 +114,6 @@ public class GameManager {
         System.out.println("La partie est terminée. Merci d'avoir joué !");
         resumeGame();
     }
-
 
     public void resumeGame() {
         if(!gameEnded)

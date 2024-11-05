@@ -1,9 +1,12 @@
 package fr.lhaven.submersion.map.Terrain;
 
+import org.bukkit.Location;
+
 public abstract class Terrain {
 
     protected int borderSize;
     protected String mapName;
+
 
     public Terrain () {
     }

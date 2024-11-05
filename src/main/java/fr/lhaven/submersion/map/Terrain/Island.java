@@ -1,6 +1,8 @@
 package fr.lhaven.submersion.map.Terrain;
 
 import fr.lhaven.submersion.utils.BorderManager;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 
 public class Island extends Terrain {
 

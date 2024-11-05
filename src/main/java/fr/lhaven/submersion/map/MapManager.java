@@ -44,5 +44,10 @@ public class MapManager {
         return terrain != null ? terrain.getMapName() : "Aucune carte définie";
     }
 
+    public void deleteMap() {
+        this.terrain = null;
+
+    }
+
     // Autres méthodes pertinentes pour gérer la carte peuvent être ajoutées ici
 }

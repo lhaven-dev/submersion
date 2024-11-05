@@ -2,6 +2,7 @@ package fr.lhaven.submersion.players;
 
 import fr.lhaven.submersion.utils.LarguageManager;
 import fr.lhaven.submersion.utils.SubmersionScoreboard;
+import org.bukkit.Bukkit;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -103,6 +104,13 @@ public class PlayerManager {
         }
     }
 
+    public void setDisconnectedDead(UUID uuid) {
+        PlayerData data = playerDataMap.get(uuid);
+        if (data != null) {
+            data.setState(PlayerState.DISCONNECTED_DEAD);
+            --aliveCount;
+        }
+    }
     public void randomTeleportPlayers() {
 
         for (PlayerData playerData : playerDataMap.values()) {
@@ -116,5 +124,12 @@ public class PlayerManager {
     }
     public int getAlivePlayersCount() {
         return aliveCount;
+    }
+
+    public void deletePlayers() {
+        playerDataMap.clear();
+        spectatorCount = 0;
+        aliveCount = 0;
+        disconnectedCount = 0;
     }
 }

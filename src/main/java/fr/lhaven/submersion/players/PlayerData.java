@@ -7,6 +7,9 @@ import org.bukkit.entity.Player;
 import java.util.UUID;
 
 public class PlayerData {
+
+    private String KilledBy = "none";
+
     private Player player;
     private boolean haveLanding = false;
     private PlayerState state = PlayerState.ALIVE; // État par défaut
@@ -57,5 +60,22 @@ public class PlayerData {
 
     public boolean isHaveLanding() {
         return haveLanding;
+    }
+
+    public boolean isDisconnectedDead() {
+        return state == PlayerState.DISCONNECTED_DEAD;
+    }
+
+    public void setKilledBy(String killedBy) {
+        KilledBy = killedBy;
+    }
+
+    public String getKilledBy() {
+        return KilledBy;
+    }
+
+
+    public boolean isDead() {
+        return state == PlayerState.DEAD;
     }
 }

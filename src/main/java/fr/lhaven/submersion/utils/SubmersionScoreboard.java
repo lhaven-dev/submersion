@@ -90,4 +90,10 @@ public class SubmersionScoreboard {
             rebuildScoreboard(player.getScoreboard(),player);
         }
     }
+
+    public void deleteScoreboard() {
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            player.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
+        }
+    }
 }

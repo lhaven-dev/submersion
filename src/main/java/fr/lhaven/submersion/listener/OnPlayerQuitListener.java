@@ -1,8 +1,10 @@
 package fr.lhaven.submersion.listener;
 
+import fr.lhaven.submersion.game.GameManager;
 import fr.lhaven.submersion.players.PlayerData;
 import fr.lhaven.submersion.players.PlayerManager;
 import fr.lhaven.submersion.players.PlayerState;
+import fr.lhaven.submersion.utils.DisconnectedManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -12,15 +14,22 @@ public class OnPlayerQuitListener implements Listener {
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
-        // Récupérer le joueur qui se déconnecte
         Player player = event.getPlayer();
-        // Récupérer les données du joueur dans PlayerManager
         PlayerData playerData = PlayerManager.getInstance().getPlayerData(player.getUniqueId());
-        // Vérifier si les données du joueur existent
         if (playerData != null) {
-            // Mettre à jour l'état du joueur à "déconnecté"
-            PlayerManager.getInstance().setDisconnected(player.getUniqueId());
-            // TODO: Gérer le cas où le joueur se déconnecte en plein jeu
+            if (!GameManager.getInstance().isGameStarted()) {
+                disconnectedPlayerBeforeGame(player);
+            } else {
+                disconnectPlayerDuringGame(player);
+            }
         }
+    }
+    private void disconnectPlayerDuringGame(Player player) {
+        PlayerManager.getInstance().setDisconnected(player.getUniqueId());
+        DisconnectedManager.getInstance().addDisconnectedPlayer(player.getUniqueId());
+    }
+
+    private void disconnectedPlayerBeforeGame(Player player) {
+        PlayerManager.getInstance().setDisconnected(player.getUniqueId());
     }
 }

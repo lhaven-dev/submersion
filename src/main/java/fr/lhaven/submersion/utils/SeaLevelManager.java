@@ -83,4 +83,8 @@ public class SeaLevelManager {
             }
         }.runTaskTimer(Bukkit.getPluginManager().getPlugin("submersion"), 0L, 20L); // Répète la tâche toutes les secondes
     }
+
+    public void deleteSeaLevel() {
+        this.sealevel = 0;
+    }
 }
