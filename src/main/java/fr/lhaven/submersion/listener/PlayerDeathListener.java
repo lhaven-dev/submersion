@@ -22,6 +22,7 @@ public class PlayerDeathListener implements Listener {
         if (playerData != null) {
             // Mettre à jour l'état du joueur à "mort"
             PlayerManager.getInstance().setDead(player.getUniqueId());
+            playerData.setKilledBy(event.getEntity().getKiller().getName()); // ajouter le tué par a la personne morte
         }
 
         // Vous pouvez également ajouter des messages ou d'autres logiques ici, si nécessaire

@@ -49,7 +49,6 @@ public class OnPlayerMoveListener implements Listener {
         }.runTaskTimer(Submersion.getPlugin(Submersion.class), 0, 20); // Vérifie toutes les secondes
     }
 
-
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {
         Player player = event.getPlayer();
@@ -57,46 +56,49 @@ public class OnPlayerMoveListener implements Listener {
         // Vérifie si le joueur a une élytre et touche le sol
         if (player.isOnGround()) {
             if (player.getInventory().getChestplate() != null && player.getInventory().getChestplate().getType() == Material.ELYTRA) {
-                ItemStack boots = player.getInventory().getBoots();
-                ItemStack plastron = new ItemStack(Material.LEATHER_CHESTPLATE);
-                if (boots != null && boots.getType() == Material.LEATHER_BOOTS) {
-
-                    // Récupérer les méta-données et la couleur des bottes
-                    LeatherArmorMeta bootsMeta = (LeatherArmorMeta) boots.getItemMeta();
-                    Color color = bootsMeta.getColor();
-
-                    // Créer un plastron en cuir avec la même couleur que les bottes
-                    LeatherArmorMeta meta = (LeatherArmorMeta) plastron.getItemMeta();
-                    meta.setColor(color);
-                    plastron.setItemMeta(meta);
+                HitGroundWithElyra(player);
                 }
-                player.getInventory().setChestplate(plastron);
-
-                player.getInventory().setChestplate(plastron);
-
-                // Enlever l'effet de chute lente
-                player.removePotionEffect(PotionEffectType.SLOW_FALLING);
-
-                // Informer le joueur de l'équipement
-                player.sendMessage("Vous avez atterri, Equipement du plastron.");
-
-                // Mettre à jour l'état du joueur
-                PlayerManager.getInstance().getPlayerData(player.getUniqueId()).setHaveLanding(true);
-            }
-
-                }
-        if (player.getLocation().getBlock().getType() == Material.WATER) {
-            if (!poisonedPlayers.contains(player)) {
-                player.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 100, 0)); // Poison pendant 5 secondes
-                poisonedPlayers.add(player);
-            }
-        } else {
-            if (poisonedPlayers.contains(player)) {
-                poisonedPlayers.remove(player);
-            }
-
         }
+        if (player.getLocation().getBlock().getType() == Material.WATER) {
+            PlayerIsInWater(player);
+        }
+        else {
+            PlayerIsNotInWater(player);
+        }
+    }
 
+    public void HitGroundWithElyra(Player player)
+    {
+        ItemStack boots = player.getInventory().getBoots();
+        ItemStack plastron = new ItemStack(Material.LEATHER_CHESTPLATE);
+        if (boots != null && boots.getType() == Material.LEATHER_BOOTS) {
 
+            // Récupérer les méta-données et la couleur des bottes
+            LeatherArmorMeta bootsMeta = (LeatherArmorMeta) boots.getItemMeta();
+            Color color = bootsMeta.getColor();
+
+            // Créer un plastron en cuir avec la même couleur que les bottes
+            LeatherArmorMeta meta = (LeatherArmorMeta) plastron.getItemMeta();
+            meta.setColor(color);
+            plastron.setItemMeta(meta);
+            player.getInventory().setChestplate(plastron);
+            player.removePotionEffect(PotionEffectType.SLOW_FALLING);
+            player.sendMessage("Vous avez atterri, Equipement du plastron.");
+            PlayerManager.getInstance().getPlayerData(player.getUniqueId()).setHaveLanding(true);
+        }
+    }
+    public void PlayerIsInWater(Player player)
+    {
+        if (!poisonedPlayers.contains(player)) {
+            player.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 100, 0)); // Poison pendant 5 secondes
+            poisonedPlayers.add(player);
+        }
+    }
+    public void PlayerIsNotInWater(Player player)
+    {
+        if (poisonedPlayers.contains(player)) {
+            poisonedPlayers.remove(player);
+        }
     }
 }
+

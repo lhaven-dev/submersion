@@ -19,7 +19,6 @@ public class OnPlayerKillListener implements Listener {
         Player player = event.getEntity().getPlayer();
         PlayerManager.getInstance().getPlayerData(player.getUniqueId()).addKill();
         int updatedKills = PlayerManager.getInstance().getPlayerData(player.getUniqueId()).getKills();
-        //SubmersionScoreboard.getInstance().updateKills(event.getEntity().getPlayer(), updatedKills);
 
         if (killer instanceof Player) {
            // Player player = (Player) killer;
@@ -27,10 +26,12 @@ public class OnPlayerKillListener implements Listener {
             // Met à jour le nombre de kills dans PlayerManager
             PlayerManager.getInstance().getPlayerData(player.getUniqueId()).addKill();
             // Récupère le nouveau nombre de kills pour mettre à jour le scoreboard
-         //   int updatedKills = PlayerManager.getInstance().getPlayerData(player.getUniqueId()).getKills();
+
             // Met à jour le scoreboard pour ce joueur
             System.out.println("Nombre de kills : " + updatedKills);
         //    SubmersionScoreboard.getInstance().updateKills(player, updatedKills);
         }
     }
+
+
 }

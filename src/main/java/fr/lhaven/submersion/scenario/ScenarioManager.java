@@ -7,6 +7,8 @@ public class ScenarioManager {
     private static ScenarioManager instance;
     private Map<String, Boolean> scenarios;
 
+    private Map<String,Scenario> scenarioMap = new HashMap<>();
+
     // Constructeur privé pour empêcher l'instanciation
     private ScenarioManager() {
         scenarios = new HashMap<>();

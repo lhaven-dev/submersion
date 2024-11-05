@@ -17,3 +17,10 @@ TODO :
 
 
 
+
+ScenarioManager :
+
+- ScenarioManager est un singleton
+- Au start de la partie , les scenario activé sont instancié et mis dans la liste
+- Les scenario sont apellé depuis la liste dynamiquement
+
