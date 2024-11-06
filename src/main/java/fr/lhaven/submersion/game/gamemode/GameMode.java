@@ -103,9 +103,7 @@ public abstract class GameMode {
             double random = Math.random();
             if (random < 0.05) {
                 System.out.println("Un événement aléatoire a eu lieu !");
-                if (ScenarioManager.getInstance().getScenarioStatus("pluie Acide") &&
-                        !ScenarioManager.getInstance().getScenarioStatus("PluieAcideActivated")) {
-                }
+                ScenarioManager.getInstance().triggerScenario();
             }
         }
     }

@@ -1,6 +1,4 @@
-package fr.lhaven.submersion.scenario;
-
-import org.checkerframework.common.returnsreceiver.qual.This;
+package fr.lhaven.submersion.scenario.scenarios;
 
 public abstract class  Scenario {
 
@@ -11,19 +9,13 @@ public abstract class  Scenario {
         isActive = false;
         hasAlreadyActivated = false;
     }
-
-
     public abstract void startScenario();
-
-
     public  void toggleScenario(boolean activate) {
        isActive = activate;
     }
-
     public boolean getIsActive() {
         return isActive;
     }
-
     public abstract void RunScenario();
 
 }

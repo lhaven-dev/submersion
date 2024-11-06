@@ -1,17 +1,21 @@
 package fr.lhaven.submersion.scenario;
 
+import fr.lhaven.submersion.scenario.scenarios.PluieAcide;
+import fr.lhaven.submersion.scenario.scenarios.Scenario;
+import fr.lhaven.submersion.scenario.scenarios.Zombie;
+
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ScenarioManager {
     private static ScenarioManager instance;
-    private Map<String, Boolean> scenarios;
+    private Map<ScenarioList, Boolean> scenarioList;
 
-    private Map<String,Scenario> scenarioMap = new HashMap<>();
+    private List<Scenario> scenarios;
 
-    // Constructeur privé pour empêcher l'instanciation
     private ScenarioManager() {
-        scenarios = new HashMap<>();
+        scenarioList = new HashMap<>();
         initializeScenarios();
     }
 
@@ -22,35 +26,56 @@ public class ScenarioManager {
         return instance;
     }
 
+    private void RunScenarios() {
+
+        // ici le runnable des scénario
+    }
     private void initializeScenarios() {
-        scenarios.put("Pluie acide", false);
-        // Initialiser d'autres scénarios...
+        for (ScenarioList scenario : ScenarioList.values()) {
+
+            switch (scenario) {
+                case ACID_RAIN:
+                    scenarios.add(new PluieAcide());
+                    break;
+                case TORNADO:
+                    scenarioList.put(scenario, false);
+                    break;
+                case EARTHQUAKE:
+                    scenarioList.put(scenario, false);
+                    break;
+                case TSUNAMI:
+                    scenarioList.put(scenario, false);
+                    break;
+                case METEORITE:
+                    scenarioList.put(scenario, false);
+                    break;
+                case NUCLEAR:
+                    scenarioList.put(scenario, false);
+                    break;
+                case ZOMBIE:
+                    scenarios.add(new Zombie());
+                    break;
+                case ALIEN:
+                    scenarioList.put(scenario, false);
+                    break;
+                case BLIZARD:
+                    scenarioList.put(scenario, false);
+                    break;
+                default:
+                    scenarioList.put(scenario, false);
+                    break;
+            }
+        }
+
+
     }
 
-    public boolean getScenarioStatus(String scenario) {
-        return scenarios.getOrDefault(scenario, false);
-    }
-
-
-    public void activateScenario(String scenario) {
-        if (scenarios.containsKey(scenario)) {
-            scenarios.put(scenario, true);
-            System.out.println("Scénario activé : " + scenario);
-            if (scenario.equals("Pluie acide")) {
-                PluieAcide.toggleScenario(true); // Démarre la pluie acide
+    public void triggerScenario() {
+        for (Scenario scenario : scenarios) {
+            if (scenario.getIsActive()) {
+                scenario.RunScenario();
             }
         }
     }
-
-    public void deactivateScenario(String scenario) {
-        if (scenarios.containsKey(scenario)) {
-            scenarios.put(scenario, false);
-            System.out.println("Scénario désactivé : " + scenario);
-            if (scenario.equals("Pluie acide")) {
-                PluieAcide.toggleScenario(false); // Désactive la pluie acide
-            }
-        }
-    }
-
 }
 

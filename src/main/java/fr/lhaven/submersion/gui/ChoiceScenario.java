@@ -22,7 +22,7 @@ public class ChoiceScenario {
         Inventory inventory = Bukkit.createInventory(player, 9 * 3, "Choix du Scénario");
         ScenarioManager scenarioManager = ScenarioManager.getInstance();
 
-        ItemStack pluieAcide = createScenarioItem(Material.RED_BANNER, "Pluie Acide", scenarioManager.getScenarioStatus("Pluie acide"));
+        ItemStack pluieAcide = createScenarioItem(Material.RED_BANNER, "Pluie Acide",false);
         ItemStack scenarioDeux = createScenarioItem(Material.DIAMOND_SWORD, "Scénario 2", false); // Remplace par le vrai statut si nécessaire
         ItemStack scenarioTrois = createScenarioItem(Material.IRON_SWORD, "Scénario 3", false); // Remplace par le vrai statut si nécessaire
 
@@ -61,14 +61,14 @@ public class ChoiceScenario {
         switch (slot) {
             case 11: // Pluie Acide
                 if (GameManager.getInstance().isGameCreated()) {
-                    boolean isPluieAcideActive = scenarioManager.getScenarioStatus("Pluie acide");
-                    if (!isPluieAcideActive) {
-                        scenarioManager.activateScenario("Pluie acide");
-                    } else {
-                        scenarioManager.deactivateScenario("Pluie acide");
-                    }
+                //    boolean isPluieAcideActive = scenarioManager.getScenarioStatus("Pluie acide");
+                //    if (!isPluieAcideActive) {
+                    //        scenarioManager.activateScenario("Pluie acide");
+                   // } else {
+                    //    scenarioManager.deactivateScenario("Pluie acide");
+                   // }
                     // Mettre à jour l'inventaire pour refléter l'état du scénario
-                    updateInventoryWithLore(player, "Pluie Acide", scenarioManager.getScenarioStatus("Pluie acide"));
+                    //updateInventoryWithLore(player, "Pluie Acide", scenarioManager.getScenarioStatus("Pluie acide"));
                 }
                 break;
 
