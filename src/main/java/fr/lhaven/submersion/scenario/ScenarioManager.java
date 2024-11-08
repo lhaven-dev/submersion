@@ -1,8 +1,6 @@
 package fr.lhaven.submersion.scenario;
 
-import fr.lhaven.submersion.scenario.scenarios.PluieAcide;
-import fr.lhaven.submersion.scenario.scenarios.Scenario;
-import fr.lhaven.submersion.scenario.scenarios.Zombie;
+import fr.lhaven.submersion.scenario.scenarios.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -37,8 +35,8 @@ public class ScenarioManager {
                 case ACID_RAIN:
                     scenarios.add(new PluieAcide());
                     break;
-                case TORNADO:
-                    scenarioList.put(scenario, false);
+                case CYBER:
+                    scenarios.add(new Cyber());
                     break;
                 case EARTHQUAKE:
                     scenarioList.put(scenario, false);
@@ -56,10 +54,10 @@ public class ScenarioManager {
                     scenarios.add(new Zombie());
                     break;
                 case ALIEN:
-                    scenarioList.put(scenario, false);
+                    scenarios.add(new Alien());
                     break;
                 case BLIZARD:
-                    scenarioList.put(scenario, false);
+                    scenarios.add(new Blizzard());
                     break;
                 default:
                     scenarioList.put(scenario, false);

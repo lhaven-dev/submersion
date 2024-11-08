@@ -6,3 +6,9 @@ commands:
   creategame:
     description: "Creation de la game."
     usage: "/creategame"
+  StructGen:
+    description: "Creation de la game."
+    usage: "/StructGen"
+  structGenReload:
+     description: "Recharger une structure à partir du fichier JSON."
+     usage: "/<command> <NomDeStructure>"
