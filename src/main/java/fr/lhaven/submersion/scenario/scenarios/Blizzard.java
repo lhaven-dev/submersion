@@ -35,38 +35,16 @@ public class Blizzard extends Scenario {
     @Override
     public void RunScenario() {
 
-                new BukkitRunnable() {
-                    World world = Bukkit.getWorlds().get(0); // Ajuste si nécessaire pour cibler un monde spécifique
-                    WorldBorder worldBorder = world.getWorldBorder();
 
-                    // Calcul des limites de la WorldBorder
-                    int borderSize = BorderManager.getInstance().getBorderSize() / 2;
-                    int minX = -borderSize;
-                    int maxX = borderSize;
-                    int minZ = -borderSize;
-                    int maxZ = borderSize;
-                    @Override
-                    public void run() {
-                        if (!isActive) {
-                            this.cancel(); // Arrêter la tâche si le scénario est désactivé
-                            return;
-                        }
-                        int y = SeaLevelManager.getInstance().getSealevel();
+        SeaLevelManager.getInstance().setBlizzard(true);
 
-                        for (int x =  minX; x <= maxX; x++) {
-                            for (int z =  minZ; z <= maxZ; z++) {
-                                    Block block = world.getBlockAt(x, y, z);
 
-                                    // Si le bloc est de l'eau, on le transforme en glace
-                                    if (block.getType() == Material.WATER) {
-                                        block.setType(Material.ICE);
-                                    }
-                                }
-                        }
-                    }
-                }.runTaskTimer(Submersion.getPlugin(Submersion.class), 0L, 20L); // Remplace `pluginInstance` par l'instance de ton plugin
-            }
-        }
+
+    }
+
+
+
+}
 
 
 

@@ -1,5 +1,6 @@
 package fr.lhaven.submersion.utils;
 
+import fr.lhaven.submersion.scenario.scenarios.Blizzard;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -19,7 +20,7 @@ public class SeaLevelManager {
     private static SeaLevelManager instance;
 
     // Attribut pour la taille de la bordure
-    private int borderSize;
+    boolean blizzard = false;
 
     // Liste des blocs waterloggables
     private Set<Block> nextblocks;
@@ -173,7 +174,7 @@ public class SeaLevelManager {
                 // Parcours des blocs d'eau de la copie de la liste
 
                 for (Block block : blocksToProcess) {
-                    
+
                     if(isInBorder(block)) {
 
                     for (BlockFace face : BlockFace.values()) {
@@ -226,7 +227,14 @@ public class SeaLevelManager {
 
 
     private void checkAndAddWaterloggable(Block block) {
+
+        if(isBlizzard())
+        {
+                block.setType(Material.SNOW_BLOCK);
+            }
+        else
         // Si le bloc est un bloc waterloggable, on l'ajoute à la liste
+        {
 
             Waterlogged waterlogged = (Waterlogged) block.getBlockData();
             // Si ce bloc peut être waterloggé et ne l'est pas déjà, on l'ajoute à la liste
@@ -234,12 +242,28 @@ public class SeaLevelManager {
                 waterlogged.setWaterlogged(true);
                 block.setBlockData(waterlogged);
             }
-
+        }
     }
 
     private void replaceAirWithWater(Block block) {
+        if(isBlizzard())
+        {
+            if (block.getType() == Material.AIR) {
+                block.setType(Material.ICE);
+            }
+        }
+        else
         if (block.getType() == Material.AIR) {
             block.setType(Material.WATER);
         }
+    }
+
+    private boolean isBlizzard()
+    {
+       return blizzard;
+    }
+
+    public void setBlizzard(boolean b) {
+        blizzard = b;
     }
 }
