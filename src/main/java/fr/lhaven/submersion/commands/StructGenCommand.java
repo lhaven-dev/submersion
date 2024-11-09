@@ -2,6 +2,8 @@ package fr.lhaven.submersion.commands;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import fr.lhaven.submersion.item.Shield;
+import fr.lhaven.submersion.item.TypeShield;
 import fr.lhaven.submersion.utils.CreateStructure;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -16,7 +18,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class StructGenCommand implements CommandExecutor {
 
@@ -33,10 +34,17 @@ public class StructGenCommand implements CommandExecutor {
             return false;
         }
 
+
+        Shield.getInstance();
+        Shield.getInstance().GiveShield(player, TypeShield.SMALL);
+        Shield.getInstance().GiveShield(player, TypeShield.LARGE);
+        Shield.getInstance().GiveShield(player, TypeShield.MEDIUM);
+
         if (args.length != 1) {
             player.sendMessage("Usage: /structGen <NomDeStructure>");
             return false;
         }
+
 
         String structureName = args[0];
 

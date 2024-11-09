@@ -87,7 +87,7 @@ public abstract class GameMode {
 
     public void checkWaterLevelIncrease() {
         if (timeElapsed % 300 == 0) { // toutes les 5 minutes (300 secondes)
-            SeaLevelManager.getInstance().updateSeaLevel(SeaLevelManager.getInstance().getSealevel() + 1);
+            SeaLevelManager.getInstance().fillBorderWithWater(SeaLevelManager.getInstance().getSealevel() + 1);
             System.out.println("Le niveau d'eau va monté !" + SeaLevelManager.getInstance().getSealevel());
         }
     }
