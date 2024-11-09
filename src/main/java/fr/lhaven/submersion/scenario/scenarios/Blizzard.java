@@ -38,13 +38,17 @@ public class Blizzard extends Scenario {
 
         SeaLevelManager.getInstance().setBlizzard(true);
 
-
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                // Désactive le blizzard
+                SeaLevelManager.getInstance().setBlizzard(false);
+            }
+        }.runTaskLater(Submersion.getPlugin(Submersion.class), 1200L); // 1200L = 10 minutes en ticks
+    }
 
     }
 
-
-
-}
 
 
 

@@ -184,6 +184,17 @@ public class SeaLevelManager {
                             if (adjacentBlock.getType() == Material.AIR) {
                                 nextblocks.add(adjacentBlock); // Ajouter à la liste des blocs waterloggables
                             }
+                            if(isBlizzard())
+                            {
+                                if (adjacentBlock.getType() == Material.WATER) {
+                                    nextblocks.add(adjacentBlock); // Ajouter à la liste des blocs waterloggables
+                                }
+                            }
+                            else{
+                                if (adjacentBlock.getType() == Material.ICE || adjacentBlock.getType() == Material.SNOW_BLOCK) {
+                                    nextblocks.add(adjacentBlock); // Ajouter à la liste des blocs waterloggables
+                                }
+                            }
 
                             // Si le bloc adjacent peut être waterloggé, on l'ajoute à la liste
                             if (adjacentBlock.getBlockData() instanceof Waterlogged adjacentWaterlogged) {
