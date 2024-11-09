@@ -1,6 +1,7 @@
 package fr.lhaven.submersion.listener;
 
 import fr.lhaven.submersion.Submersion;
+import fr.lhaven.submersion.game.GameManager;
 import fr.lhaven.submersion.gui.MenuType;
 import fr.lhaven.submersion.players.PlayerManager;
 import fr.lhaven.submersion.utils.LarguageManager;
@@ -26,10 +27,13 @@ public class GuiListener implements Listener {
             return; // Sort si ce n'est pas un joueur
         }
 
-        if (!PlayerManager.getInstance().getPlayerData(player.getUniqueId()).isHaveLanding()) {
-            // Vérifiez si le joueur essaie de retirer une pièce d'armure (index 36 à 39)
-            if (event.getSlot() >= 36 && event.getSlot() <= 39) {
-                event.setCancelled(true); // Annule le changement d'armure
+        if(GameManager.getInstance().isGameStarted())
+        {
+            if (!PlayerManager.getInstance().getPlayerData(player.getUniqueId()).isHaveLanding()) {
+                // Vérifiez si le joueur essaie de retirer une pièce d'armure (index 36 à 39)
+                if (event.getSlot() >= 36 && event.getSlot() <= 39) {
+                    event.setCancelled(true); // Annule le changement d'armure
+                }
             }
         }
         // Vérifie si le joueur a la métadonnée "OpenedMenu"

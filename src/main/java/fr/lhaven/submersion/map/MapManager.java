@@ -49,5 +49,9 @@ public class MapManager {
 
     }
 
+    public boolean isMapSelected() {
+        return terrain != null;
+    }
+
     // Autres méthodes pertinentes pour gérer la carte peuvent être ajoutées ici
 }

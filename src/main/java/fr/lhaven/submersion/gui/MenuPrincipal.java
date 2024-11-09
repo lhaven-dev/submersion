@@ -4,6 +4,7 @@ package fr.lhaven.submersion.gui;
 import fr.lhaven.submersion.Submersion;
 
 import fr.lhaven.submersion.game.GameManager;
+import fr.lhaven.submersion.players.PlayerManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -37,7 +38,7 @@ public  class MenuPrincipal {
         PlayersMeta.setDisplayName("Players");
         Players.setItemMeta(PlayersMeta);
 
-        ItemStack Start = new ItemStack(Material.YELLOW_BANNER);
+        ItemStack Start = new ItemStack(Material.WHITE_BANNER);
         ItemMeta Startmeta = Map.getItemMeta();
         Startmeta.setDisplayName("Start");
         Start.setItemMeta(Startmeta);
@@ -65,7 +66,7 @@ public  class MenuPrincipal {
                 ChoiceScenario.openChoiceScenario(player);
                 break;
             case 16:
-                GameManager.getInstance().startGame();
+                IsReady();
                 break;
             case 12:
                 ChoiceMap.openChoiceMap(player);
@@ -79,6 +80,18 @@ public  class MenuPrincipal {
 
             default:
                 break;
+        }
+    }
+
+    private static void IsReady() {
+
+        if(GameManager.getInstance().isMapSelected())
+        {
+                GameManager.getInstance().startGame();
+        }
+        else
+        {
+            Bukkit.broadcastMessage("Veuillez choisir une map");
         }
     }
 }

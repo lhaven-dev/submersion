@@ -94,6 +94,7 @@ public class GameManager {
             return;
         }
         DisconnectedManager.getInstance();
+        System.out.println("AvantStartGame created");
         gameMode.startGame();
         gameStarted = true;
         PlayerManager.getInstance().setSpectatorCount();
@@ -122,4 +123,7 @@ public class GameManager {
         }
     }
 
+    public boolean isMapSelected() {
+        return MapManager.getInstance().isMapSelected();
+    }
 }

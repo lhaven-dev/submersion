@@ -73,6 +73,11 @@ public class PlayerManager {
     }
 
     public void setDead(UUID uuid) {
+        if(Bukkit.getPlayer(uuid) != null)
+        {
+            Bukkit.getPlayer(uuid).setGameMode(org.bukkit.GameMode.SPECTATOR);
+
+        }
         PlayerData data = playerDataMap.get(uuid);
         if (data != null) {
             data.setState(PlayerState.DEAD);

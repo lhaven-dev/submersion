@@ -1,13 +1,11 @@
 package fr.lhaven.submersion.listener;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import fr.lhaven.submersion.caisse.CaisseManager;
 import fr.lhaven.submersion.caisse.TypeCaisse;
 import fr.lhaven.submersion.commands.StructGenCommand;
 import fr.lhaven.submersion.item.Shield;
 import fr.lhaven.submersion.item.TypeShield;
-import fr.lhaven.submersion.utils.CreateStructure;
+import fr.lhaven.submersion.utils.Structure.StructureManager;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -20,12 +18,11 @@ import org.bukkit.inventory.ItemStack;
 
 public class OnChestListener implements Listener {
 
-    private final StructGenCommand structGenCommand;
 
     CaisseManager caisseManager;
 
-    public OnChestListener(StructGenCommand structGenCommand) {
-        this.structGenCommand = structGenCommand;
+    public OnChestListener() {
+
     }
 
     @EventHandler
@@ -83,13 +80,13 @@ private void SelectStructure(Player p , PlayerInteractEvent event)
 
         // Clic droit : définit le coin 1 (coin gauche)
         if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-            CreateStructure.getInstance().setCorner1(clickedLocation);
+            StructureManager.getInstance().setCorner1(clickedLocation);
             p.sendMessage("Coin gauche sélectionné : " + clickedLocation);
         }
 
         // Clic gauche : définit le coin 2 (coin droit)
         if (event.getAction() == Action.LEFT_CLICK_BLOCK) {
-            CreateStructure.getInstance().setCorner2(clickedLocation);
+            StructureManager.getInstance().setCorner2(clickedLocation);
             p.sendMessage("Coin droit sélectionné : " + clickedLocation);
         }
 

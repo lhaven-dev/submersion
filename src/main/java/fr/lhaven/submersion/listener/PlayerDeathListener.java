@@ -12,6 +12,7 @@ public class PlayerDeathListener implements Listener {
 
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent event) {
+
         // Récupérer le joueur qui est mort
         Player player = event.getEntity();
 
@@ -22,7 +23,17 @@ public class PlayerDeathListener implements Listener {
         if (playerData != null) {
             // Mettre à jour l'état du joueur à "mort"
             PlayerManager.getInstance().setDead(player.getUniqueId());
-            playerData.setKilledBy(event.getEntity().getKiller().getName()); // ajouter le tué par a la personne morte
+           // playerData.setKilledBy(event.getEntity().getKiller().getName()); // ajouter le tué par a la personne morte
+        }
+        if(player.getKiller() instanceof Player){
+            event.setDeathMessage(player.getName() + " a été tué"); // Supprimer le message de mort par défaut
+
+            Player killer = player.getKiller();
+            PlayerManager.getInstance().getPlayerData(player.getUniqueId()).setKilledBy(killer.getName());
+            PlayerManager.getInstance().getPlayerData(killer.getUniqueId()).addKill();
+        }
+        else{
+            event.setDeathMessage(player.getName() + " est mort");
         }
 
         // Vous pouvez également ajouter des messages ou d'autres logiques ici, si nécessaire
